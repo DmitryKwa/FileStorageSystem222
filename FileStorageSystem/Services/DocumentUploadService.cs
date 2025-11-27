@@ -26,10 +26,10 @@ namespace FileStorageSystem.Services
 
         public async Task<List<Document>> UploadDocumentsAsync(
             IFormFileCollection files,
-            string senderName,
             string senderInn,
+            string senderName,
             int documentTypeId,
-            List<string> keywords = null)
+            List<string> keywords = null) // Если файлов несколько, то у каждого файла может быть разный контрагент и тип
         {
             // Проверка общего размера файлов (256 МБ = 268435456 байт)
             long totalSize = files.Sum(f => f.Length);
@@ -46,8 +46,8 @@ namespace FileStorageSystem.Services
             {
                 counterparty = new Counterparty
                 {
-                    Name = senderName,
-                    Inn = senderInn
+                    Inn = senderInn,
+                    Name = senderName
                 };
                 _context.Counterparties.Add(counterparty);
                 await _context.SaveChangesAsync(); // Сохранить, чтобы получить Id
@@ -67,7 +67,7 @@ namespace FileStorageSystem.Services
                 if (file.Length > 0)
                 {
                     // Генерировать уникальное имя файла
-                    string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName); // Зачем Guid здесь?
                     string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
                     // Сохранить файл на диск
@@ -93,7 +93,6 @@ namespace FileStorageSystem.Services
                         Title = Path.GetFileNameWithoutExtension(file.FileName),
                         DateAdded = DateTime.UtcNow,
                         ShortDescription = "", // Можно расширить, чтобы принимать из запроса
-                        FilePath = filePath,
                         SenderId = counterparty.Id,
                         TypeId = documentTypeId,
                         ExtensionId = extension.Id
