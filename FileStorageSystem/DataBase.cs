@@ -7,7 +7,8 @@ namespace FileStorageSystem
         private string? _connectionString;
         private SqlConnection? _connection;
 
-        public void DatabaseConnection(string connectionString)
+        public void DatabaseConnection(string connectionString = 
+            "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=FSS;Integrated Security=True;")
         {
             try
             {
