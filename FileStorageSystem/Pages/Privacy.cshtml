@@ -5,4 +5,14 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<p onclick="document.getElementById('myForm').submit();">Use this page to detail your site's privacy policy.</p>
+<!-- Форма для вызова метода -->
+<form id="myForm" method="post" asp-page-handler="MyMethod">
+    <!-- Скрытый input для безопасности (ASP.NET требует его для POST) -->
+    @Html.AntiForgeryToken()
+</form>
+
+<!-- Кликабельный <p>, который отправляет форму -->
+<p onclick="document.getElementById('myForm').submit();" style="cursor: pointer; color: blue; text-decoration: underline;">
+    Нажмите здесь, чтобы вызвать метод теста подключения к бд!</p>
+
+<p>Use this page to detail your site's privacy policy.</p>
