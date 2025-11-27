@@ -1,13 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Reflection.Emit;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;  // Добавлено для LINQ-запросов (если будете использовать в методах)
+using System.Threading.Tasks;  // Добавлено для асинхронных методов
 using Microsoft.EntityFrameworkCore;
 
 namespace FileStorageSystem.Model
 {
     public class DocumentStorageContext : DbContext
     {
+        // Конструктор для инъекции опций (строка подключения и т.д.)
         public DocumentStorageContext(DbContextOptions<DocumentStorageContext> options) : base(options) { }
 
+        // DbSet для каждой сущности (таблицы в БД)
         public DbSet<Document> Documents { get; set; }
         public DbSet<Counterparty> Counterparties { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
@@ -16,23 +20,72 @@ namespace FileStorageSystem.Model
         public DbSet<DocumentKeyword> DocumentKeywords { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
-
+        /*
+        // Метод для настройки модели (связи, ключи и т.д.)
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Настройка составного ключа для DocumentKeywords (junction table)
-            modelBuilder.Entity<DocumentKeyword>()
-                .HasKey(dk => new { dk.DocumentId, dk.KeywordId });
+            base.OnModelCreating(modelBuilder);  // Вызов базового метода
 
-            // Настройка связей, если нужно (EF Core обычно infer их автоматически, но можно уточнить)
+            // Настройка для junction-таблицы DocumentKeywords (многие-ко-многим между Documents и Keywords)
+            modelBuilder.Entity<DocumentKeyword>()
+                .HasKey(dk => new { dk.DocumentId, dk.KeywordId });  // Составной первичный ключ
+
+            // Настройка foreign keys для DocumentKeyword
             modelBuilder.Entity<DocumentKeyword>()
                 .HasOne(dk => dk.Document)
                 .WithMany(d => d.DocumentKeywords)
-                .HasForeignKey(dk => dk.DocumentId);
+                .HasForeignKey(dk => dk.DocumentId)
+                .OnDelete(DeleteBehavior.Cascade);  // Каскадное удаление (опционально, если хотите)
 
             modelBuilder.Entity<DocumentKeyword>()
                 .HasOne(dk => dk.Keyword)
                 .WithMany(k => k.DocumentKeywords)
-                .HasForeignKey(dk => dk.KeywordId);
+                .HasForeignKey(dk => dk.KeywordId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Дополнительные настройки связей (если EF Core не infer их автоматически)
+            // Например, для Document: связи с Counterparty, DocumentType и Extension
+            modelBuilder.Entity<Document>()
+                .HasOne(d => d.Counterparty)
+                .WithMany(c => c.Documents)  // Предполагаю, что Counterparty имеет ICollection<Document>
+                .HasForeignKey(d => d.CounterpartyId);
+
+            modelBuilder.Entity<Document>()
+                .HasOne(d => d.DocumentType)
+                .WithMany(dt => dt.Documents)
+                .HasForeignKey(d => d.DocumentTypeId);
+
+            modelBuilder.Entity<Document>()
+                .HasOne(d => d.Extension)
+                .WithMany(e => e.Documents)
+                .HasForeignKey(d => d.ExtensionId);
+
+            // Можно добавить индексы для производительности (опционально)
+            modelBuilder.Entity<Document>()
+                .HasIndex(d => d.FileName);  // Индекс по имени файла для быстрого поиска
+        }*/
+
+        // Асинхронный метод для тестирования подключения к БД
+        // Возвращает true, если подключение работает, и есть ли данные в Counterparties
+        public async Task<(bool CanConnect, bool HasData, string ErrorMessage)> TestConnectionAsync()
+        {
+            try
+            {
+                // Проверяем, можно ли подключиться
+                bool canConnect = await Database.CanConnectAsync();
+                if (!canConnect)
+                {
+                    return (false, false, "Не удалось открыть соединение с БД.");
+                }
+
+                // Проверяем, есть ли данные (простой запрос к Counterparties)
+                bool hasData = await Counterparties.AnyAsync();
+                return (true, hasData, null);
+            }
+            catch (Exception ex)
+            {
+                return (false, false, $"Ошибка: {ex.Message}");
+            }
         }
     }
 }
