@@ -9,8 +9,21 @@ namespace FileStorageSystem
 
         public void DatabaseConnection(string connectionString)
         {
-            _connectionString = connectionString;
-            _connection = new SqlConnection(_connectionString);
+            try
+            {
+                _connectionString = connectionString;
+                _connection = new SqlConnection(_connectionString);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка выполнения: {ex.Message}");
+                Console.WriteLine($"Внутреннее исключение: {ex.InnerException?.Message}");
+                Logger.LogError($"User=admin",
+                                $"DB connecting error. ", ex);
+            }
+            Logger.LogInfo($"User=admin",
+                           $"DB connecting. " +
+                           $"id=0");
         }
 
         public SqlConnection GetConnection() => _connection;
@@ -30,7 +43,7 @@ namespace FileStorageSystem
                 Console.WriteLine($"Ошибка выполнения: {ex.Message}");
                 Console.WriteLine($"Внутреннее исключение: {ex.InnerException?.Message}");
                 Logger.LogError($"User=admin",
-                                $"DB connection error", ex);
+                                $"DB connection error. ", ex);
             }
             Logger.LogInfo($"User=admin",
                            $"Establishing a connection to the DB. " +
@@ -72,7 +85,7 @@ namespace FileStorageSystem
                 Console.WriteLine($"Ошибка выполнения: {ex.Message}");
                 Console.WriteLine($"Внутреннее исключение: {ex.InnerException?.Message}");
                 Logger.LogError($"User=admin",
-                                $"Error for executing a request - {query}", ex);
+                                $"Error for executing a request - {query}. ", ex);
             }
             Logger.LogInfo($"User=admin",
                            $"Executing a request {query}. " +
@@ -93,7 +106,7 @@ namespace FileStorageSystem
                 Console.WriteLine($"Ошибка выполнения: {ex.Message}");
                 Console.WriteLine($"Внутреннее исключение: {ex.InnerException?.Message}");
                 Logger.LogError($"User=admin",
-                                $"Error for executing a request - {query}", ex);
+                                $"Error for executing a request - {query}. ", ex);
             }
             Logger.LogInfo($"User=admin",
                            $"Executing a request {query}. " +
@@ -120,7 +133,7 @@ namespace FileStorageSystem
                 Console.WriteLine($"Ошибка выполнения: {ex.Message}");
                 Console.WriteLine($"Внутреннее исключение: {ex.InnerException?.Message}");
                 Logger.LogError($"User=admin",
-                                $"Error dispose id=0", ex);
+                                $"Error dispose", ex);
             }
             Logger.LogInfo($"User=admin",
                            $"Dispose to DB. " +
