@@ -26,18 +26,3 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 app.Run();
-
-DataBase dataBase = new DataBase();
-try
-{
-    dataBase.DatabaseConnection();
-    dataBase.OpenConnection();
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Ошибка выполнения: {ex.Message}");
-    Console.WriteLine($"Внутреннее исключение: {ex.InnerException?.Message}");
-    Logger.LogError($"User=admin",
-                    $"DB connecting error. ", ex);
-}
-dataBase.CloseConnection();

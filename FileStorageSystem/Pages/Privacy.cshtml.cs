@@ -21,24 +21,7 @@ namespace FileStorageSystem.Pages
         {
         }
 
-
-
-        public async Task<IActionResult> TestDb()
-        {
-            var result = await _context.TestConnectionAsync();
-            if (result.CanConnect)
-            {
-                return Ok(new { Message = "Подключение успешно", HasData = result.HasData });
-            }
-            else
-            {
-                return StatusCode(500, result.ErrorMessage);
-            }
-        }
-
-
-
-
+        DocumentStorageContext _context = new DocumentStorageContext();
         public  async Task<IActionResult> OnPostMyMethodAsync() // Новый метод для клика
         {
             // Ваша логика здесь (например, уведомление или работа с БД)
@@ -68,23 +51,6 @@ namespace FileStorageSystem.Pages
 
             // Верните RedirectToPage или PartialView, если нужно обновить страницу
             return RedirectToPage(); // Или Page() для перезагрузки
-        }
-        public void Test() 
-        {
-            DataBase dataBase = new DataBase();
-            try
-            {
-                dataBase.DatabaseConnection();
-                dataBase.OpenConnection();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Ошибка выполнения: {ex.Message}");
-                Console.WriteLine($"Внутреннее исключение: {ex.InnerException?.Message}");
-                Logger.LogError($"User=admin",
-                                $"DB connecting error. ", ex);
-            }
-            dataBase.CloseConnection();
         }
     }
 
