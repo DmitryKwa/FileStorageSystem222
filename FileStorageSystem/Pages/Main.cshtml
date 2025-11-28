@@ -324,12 +324,10 @@
                 data.forEach(item => {
                   // Предполагаем, что в JSON есть поля, которые мы хотим использовать в качестве value и текста option.
                   // Замени 'id' и 'name' на соответствующие поля в твоем JSON.  Важно!
-                  const optionValue = item.id;
                   const optionText = item.name;  // Или item.какое_то_другое_поле
 
                   // Создаем элемент option
                   const option = document.createElement('option');
-                  option.value = optionValue;
                   option.text = optionText;
 
                   // Добавляем option в select
@@ -377,11 +375,9 @@
 
                 data.forEach(item => {
                   // Важно! Замени 'id' и 'name' на соответствующие поля в твоем JSON.
-                  const optionValue = item.id;
                   const optionText = item.name; // Или item.какое_то_другое_поле
 
                   const option = document.createElement('option');
-                  option.value = optionValue;
                   option.text = optionText;
 
                   selectElement.add(option);
