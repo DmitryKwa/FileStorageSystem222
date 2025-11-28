@@ -1,0 +1,38 @@
+﻿@page
+@model FileStorageSystem.Pages.login_pageModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в систему</title>
+    <link rel="stylesheet" href="/css/main-style.css">
+</head>
+<body>
+    <form action="/login" method="POST">
+        <div class="login-header-row">
+            <h1>Вход в систему</h1>
+            <span title="Чтобы узнать данные для входа — обратитесь к администратору.">?</span>
+        </div>
+
+        <div class="inputs-row">
+            <div class="input-row">
+                <label for="login" class="label-text">Логин</label>
+                <input type="text" id="login" name="login" placeholder="Введите свой логин" required>
+
+            </div>
+            <div class="input-row">
+                <label for="password">Пароль</label>
+                <input type="password" id="password" name="password" placeholder="Введите свой пароль" required autocomplete="current-password">
+            </div>
+        </div>
+
+        <!-- Кнопка входа -->
+        <button type="submit">Вход</button>
+    </form>
+</body>
+</html>

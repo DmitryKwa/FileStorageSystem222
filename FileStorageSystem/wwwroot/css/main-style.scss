@@ -1,0 +1,96 @@
+﻿$primary-color: #4880FF;
+$secondary-color: #0056b3;
+$background-color: #1B2431;
+$form-background: #273142;
+$input-background: #323D4E;
+$text-color: white;
+$input-text-color: #B6B6B6;
+$border-radius: 5px;
+$border-color: #CFCFCF1D;
+$input-padding: 15px;
+$margin-bottom: 15px;
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+// Базовые стили
+body {
+    font-family: "Nunito Sans", sans-serif;
+    background-color: $background-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 14px;
+    margin: 0;
+}
+
+form {
+    background-color: $form-background;
+    padding: 30px;
+    border-radius: $border-radius;
+}
+
+h1 {
+    color: $text-color;
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    color: $text-color;
+    font-weight: 800;
+}
+
+input {
+    width: 360px;
+    padding: $input-padding;
+    border: 0.6px solid $border-color;
+    border-radius: $border-radius;
+    background-color: $input-background;
+    color: $input-text-color;
+    font-weight: 500;
+    // Стили для состояний фокуса и ховера
+    &:focus {
+        outline: none;
+        border-color: lighten($primary-color, 30%);
+    }
+}
+
+button {
+    margin-top: 30px;
+    width: 100%;
+    padding: $padding;
+    background-color: $primary-color;
+    border: none;
+    border-radius: $border-radius;
+    color: $text-color;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $secondary-color;
+    }
+}
+
+span[title] {
+    color: $text-color;
+    font-size: 16px;
+    margin-left: 5px;
+    cursor: help;
+}
+
+.login-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.input-row {
+    display: grid;
+    gap: 10px;
+}
+
+.inputs-row {
+    display: grid;
+    gap: 24px;
+}
