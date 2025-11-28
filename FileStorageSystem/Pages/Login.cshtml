@@ -10,13 +10,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход в систему</title>
-    <link rel="stylesheet" href="/css/main-style.css">
+    <link rel="stylesheet" href="/css/login-style.css">
 </head>
 <body>
     <form action="/login" method="POST">
         <div class="login-header-row">
             <h1>Вход в систему</h1>
-            <span title="Чтобы узнать данные для входа — обратитесь к администратору.">?</span>
+            <span title="Чтобы узнать данные для входа — обратитесь к администратору.">
+                <img src="/img/Question.svg" alt="">
+            </span>
         </div>
 
         <div class="inputs-row">
@@ -31,14 +33,13 @@
             </div>
         </div>
 
-        <!-- Кнопка входа -->
-        <button id="loginButton" type="submit">Вход</button>
+        <button id="loginButton" class="base-btn">Войти</button>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             document.getElementById('loginButton').addEventListener('click', function() {
                 event.preventDefault(); // предотвращаем отправку формы
-                
+
                 // Получаем значения из полей ввода
                 const email = document.getElementById('login').value;
                 const pass = document.getElementById('password').value;
@@ -64,7 +65,7 @@
                     const data = await response.status;
                     return data;
                 }
-                
+
                 login(email, pass)
                     .then(response => {
                         localStorage.setItem('login', email)
@@ -73,23 +74,6 @@
                     .catch(error => {
                         alert(error);
                     });
-        
-            //     .then(response => response.json())
-            //     .then(response => {
-            //         if (!response.ok) {
-            //             throw new Error('Ошибка сети');
-            //         }
-            //         return response.json();
-            //     })
-            //     .then(data => {
-            //         обработка результата
-            //         console.log('Успех:', data);
-            //         alert('Авторизация прошла успешно!', data);
-            //     })
-            //     .catch(error => {
-            //         console.error('Ошибка:', error);
-            //         alert('Ошибка авторизации', error);
-            //     });
             });
         </script>
     </form>
