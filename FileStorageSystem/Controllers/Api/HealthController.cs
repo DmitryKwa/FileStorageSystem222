@@ -1,5 +1,6 @@
 ﻿using FileStorageSystem.Model;
 using FileStorageSystem.Pages;
+using FileStorageSystem.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -22,46 +23,21 @@ namespace FileStorageSystem.Controllers.Api
             _logger = logger;
         }
 
-        // GET: api/<HealthController>
-        [HttpGet("DatabaseConnectivity")]
-        public async Task<ActionResult> GetDatabaseConnectivity()
-        {
-            try
-            {
-                // Проверяем подключение, выполняя простой запрос (например, проверка существования записей в таблице Counterparties)
-                bool canConnect = await _context.Database.CanConnectAsync();
-                if (canConnect)
-                {
-                    // Дополнительно: попробуем выполнить простой запрос
-                    bool hasData = await _context.Counterparties.AnyAsync();
-                    return Ok(new { Message = "Подключение к БД успешно", HasData = hasData });
-                }
-                else
-                {
-                    return StatusCode(500, "Не удалось подключиться к БД");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Ошибка выполнения: {ex.Message}");
-                Console.WriteLine($"Внутреннее исключение: {ex.InnerException?.Message}");
-                Logger.LogError($"User=admin",
-                                $"DB connecting error. ", ex);
-            }
-
-            return StatusCode(500, "Не удалось подключиться к БД");
-        }
-
         // GET api/<HealthController>/5
         [HttpGet("db2")]
         public async Task<string> Get(int id)
         {
-            SqlConnection connection = new SqlConnection("Server=(localdb)\\mssqllocaldb;Database=FSS;Trusted_Connection=True;");
+            string connectionString = "Server=(localdb)\\mssqllocaldb;Database=FSS;Trusted_Connection=True;";
+            DB db = new(connectionString);
             try
             {
-                // Открываем подключение
-                await connection.OpenAsync();
-                return "Подключение открыто";
+                db.OpenConnection();
+
+                if (db.ConnectionStatus())
+                {
+                    return "Подключение открыто";
+                }
+                return "Иду я нахуй";
             }
             catch (SqlException ex)
             {
@@ -69,12 +45,7 @@ namespace FileStorageSystem.Controllers.Api
             }
             finally
             {
-                // если подключение открыто
-                if (connection.State == ConnectionState.Open)
-                {
-                    // закрываем подключение
-                    await connection.CloseAsync();
-                }
+                db.CloseConnection();
             }
         }
 
