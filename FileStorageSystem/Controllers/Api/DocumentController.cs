@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using FileStorageSystem.Model;
 using Microsoft.EntityFrameworkCore;
+using FileStorageSystem.Model;
+using FileStorageSystem.ViewModels;
+using FileStorageSystem.Services;
 
 namespace FileStorageSystem.Controllers.Api
 {
@@ -42,15 +44,18 @@ namespace FileStorageSystem.Controllers.Api
 
         // POST api/<DocumentController>
         [HttpPost]
-        public async Task<IActionResult> UploadDocuments([FromForm] IFormFile file, [FromForm] Document doc)
+        public async Task<IActionResult> UploadDocuments([FromForm] IFormFile file, [FromForm] DocFromClientModel docData)
         {
             if (file != null)
             {
+                string filePath = "";
                 // Пример сохранения файла
                 if (file.Length > 0)
                 {
+                    FileService fileService = new();
+                    
                     var fileName = file.FileName;
-                    var filePath = Path.Combine("Uploads", fileName);
+                    filePath = Path.Combine(fileService.root, fileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
@@ -58,6 +63,8 @@ namespace FileStorageSystem.Controllers.Api
                     }
                 }
 
+                Document document = new Document { Name = docData.Name, DocType = docData.DocType, Size = file.Length, AddTime = DateTime.Now, INNCAgents = docData.INNCAgents, FilePath = filePath };
+                await _context.Documents.AddAsync(document);
                 return Ok("Файл успешно загружен.");
             }
 

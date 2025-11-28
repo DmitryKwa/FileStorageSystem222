@@ -222,10 +222,12 @@
                 const formData = new FormData();
 
                 // Добавляем JSON-данные
-                formData.append('documentName', docName);
-                formData.append('documentType', docType);
-                formData.append('documentOwner', docOwner);
-
+                const jsonData = {
+                    name: docName,
+                    docType: docType,
+                    INNCAgents: docOwner
+                }
+                formData.append('data', JSON.stringify(jsonData));
                 // Добавляем файл
                 formData.append('documentFile', file); // 'documentFile' - это имя поля на сервере
 

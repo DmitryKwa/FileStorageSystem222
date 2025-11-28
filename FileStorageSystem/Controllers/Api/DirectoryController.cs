@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.IO;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace FileStorageSystem.Controllers.Api
 {
@@ -12,7 +10,7 @@ namespace FileStorageSystem.Controllers.Api
         [HttpGet]
         public async Task<IActionResult> GetDirectories()
         {
-            
+
             string[] dirs = Directory.GetDirectories(root);
             List<string> relativeDirs = [];
 
@@ -27,17 +25,27 @@ namespace FileStorageSystem.Controllers.Api
         [HttpPost]
         public async Task<IActionResult> CreateDirectory([FromBody] string path)
         {
-            string newDirPath = Path.Combine(root, path);
+            string newDir = Path.Combine(root, path);
 
-            Directory.CreateDirectory(newDirPath);
+            Directory.CreateDirectory(newDir);
             return Ok($"Директория создана: {path}");
+        }
+
+        [HttpPut("{path}")]
+        public async Task<IActionResult> UpdateDirectory(string path, [FromBody] string newPath)
+        {
+            string dir = Path.Combine(root, path);
+            string newDir = Path.Combine(root, newPath);
+
+            Directory.Move(dir, newPath);
+            return Ok($"Директория создана: {newPath}");
         }
 
         [HttpDelete("{path}")]
         public async Task<IActionResult> DeleteDirectory(string path)
         {
             string dir = Path.Combine(root, path);
-            
+
             if (Directory.Exists(dir))
             {
                 Directory.Delete(dir, recursive: true);
