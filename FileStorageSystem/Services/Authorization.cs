@@ -17,7 +17,7 @@ namespace FileStorageSystem.Services
                 db.OpenConnection();
                 if (db.ConnectionStatus())
                 {
-                    string query = "SELECT COUNT(*) FROM Users WHERE Email = @username AND PasswordHash = @password";
+                    string query = "SELECT COUNT(*) FROM Users WHERE Email = @username AND Password = @password";
                     SqlCommand command = new SqlCommand(query, db._connection);
                     string passSHA512 = Props.ToSHA512(pass);
                     

@@ -9,17 +9,6 @@ namespace FileStorageSystem.Controllers.Api
     [ApiController]
     public class DocumentController : ControllerBase
     {
-        // GET: api/<DocumentController>
-        [HttpGet]
-        public IEnumerable<Document> GetDocumentsList()
-        {
-            Document doc = new();
-            doc.Id = 1;
-            doc.Title = "Test";
-            doc.DateAdded = DateTime.Now;
-            return [ doc ];
-        }
-
         // GET api/<DocumentController>/5
         [HttpGet("{id}")]
         public string Get(int id)
