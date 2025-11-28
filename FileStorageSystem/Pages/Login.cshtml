@@ -77,7 +77,7 @@
 
                 login(email, pass)
                     .then(response => {
-                        localStorage.setItem('login', email)
+                        localStorage.setItem('login', email);
                         window.location.href = '/Main';
                     })
                     .catch(error => {
