@@ -44,7 +44,7 @@ namespace FileStorageSystem.Controllers.Api
 
         // POST api/<DocumentController>
         [HttpPost]
-        public async Task<IActionResult> UploadDocuments([FromForm] IFormFile file, [FromForm] DocFromClientModel docData)
+        public async Task<IActionResult> UploadDocuments(IFormFile file, [FromForm] DocFromClientModel docData)
         {
             if (file != null)
             {
