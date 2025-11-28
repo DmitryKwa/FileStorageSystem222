@@ -40,10 +40,10 @@
                 event.preventDefault(); // предотвращаем отправку формы
 
                 // Получаем значения из полей ввода
-                const username = document.getElementById('login').value;
+                const email = document.getElementById('login').value;
                 const pass = document.getElementById('password').value;
 
-                async function login(username, password)
+                async function login(email, password)
                 {
                     const response = await fetch('/api/user', {
                         method: 'POST',
@@ -51,7 +51,7 @@
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            username: username,
+                            email: email,
                             password: password
                         })
                     });

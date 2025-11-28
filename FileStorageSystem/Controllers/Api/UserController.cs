@@ -24,11 +24,11 @@ namespace FileStorageSystem.Controllers.Api
                 db.OpenConnection();
                 if (db.ConnectionStatus())
                 {
-                    string query = "SELECT COUNT(*) FROM Users WHERE Email = @username AND PasswordHash = @password";
+                    string query = "SELECT COUNT(*) FROM Users WHERE Email = @email AND PasswordHash = @password";
                     SqlCommand command = new SqlCommand(query, db._connection);
                     string passSHA512 = Props.ToSHA512(user.Password); // Шифр
 
-                    command.Parameters.AddWithValue("@username", user.Username);
+                    command.Parameters.AddWithValue("@email", user.Email);
                     command.Parameters.AddWithValue("@password", passSHA512);
 
                     int userCount = (int)command.ExecuteScalar();

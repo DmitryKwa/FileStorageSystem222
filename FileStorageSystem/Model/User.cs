@@ -6,10 +6,19 @@ namespace FileStorageSystem.Model
     public class User
     {
         [Key]
-        public int Id { get; set; }
+        [StringLength(255)]
+        public string Email { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(255)]
+        public string Surname { get; set; }
+
+        [Required]
+        [StringLength(255)]
+        public string Username { get; set; }
+
+        [Required]
+        [StringLength(255)]
         public string Username { get; set; }
 
         [Required]
