@@ -24,8 +24,11 @@ namespace FileStorageSystem.Controllers.Api
             _logger = logger;
         }
 
+        /*
+         * Проверка, авторизация пользователя admin, в бд без SHA512
+         */
         // GET api/<HealthController>/5
-        [HttpGet("db2")]
+        [HttpGet("ConnectionBD - Auth. User admin")]
         public async Task<string> Get(int id)
         {
             Authorization authorization = new Authorization();

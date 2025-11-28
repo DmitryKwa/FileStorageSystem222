@@ -3,6 +3,9 @@ using System.Data;
 
 namespace FileStorageSystem.Services
 {
+    /*
+     * Подключение к базе данных
+     */
     public class DB
     {
         private readonly string _connectionString;

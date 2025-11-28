@@ -8,6 +8,9 @@ namespace FileStorageSystem.Services
 {
     public class Authorization
     {
+        /*
+         * Авторизация пользователя, если пользователь был авторизован успешно, вернет True, если нет, то очевидно
+         */
         public bool AuthorizationUser(string login, string pass)
         {
             string connectionString = "Server=(localdb)\\mssqllocaldb;Database=FSS;Trusted_Connection=True;";
