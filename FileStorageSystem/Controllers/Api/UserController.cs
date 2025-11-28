@@ -26,7 +26,7 @@ namespace FileStorageSystem.Controllers.Api
                 {
                     string query = "SELECT COUNT(*) FROM Users WHERE Email = @username AND PasswordHash = @password";
                     SqlCommand command = new SqlCommand(query, db._connection);
-                    string passSHA512 = Props.ToSHA512(user.Password);
+                    string passSHA512 = Props.ToSHA512(user.Password); // Шифр
 
                     command.Parameters.AddWithValue("@username", user.Username);
                     command.Parameters.AddWithValue("@password", passSHA512);
