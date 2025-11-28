@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using FileStorageSystem.Model;
+using FileStorageSystem.Model.ForApi;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,7 +14,7 @@ namespace FileStorageSystem.Controllers.Api
     {
         // POST api/<UserController>
         [HttpPost]
-        public async Task<bool> Login([FromBody] (string login, string password) user)
+        public async Task<IActionResult> Login([FromBody] LoginForm user)
         {
             string connectionString = "Server=(localdb)\\mssqllocaldb;Database=FSS;Trusted_Connection=True;";
             DB db = new(connectionString);
@@ -25,13 +26,17 @@ namespace FileStorageSystem.Controllers.Api
                 {
                     string query = "SELECT COUNT(*) FROM Users WHERE Email = @username AND PasswordHash = @password";
                     SqlCommand command = new SqlCommand(query, db._connection);
-                    string passSHA512 = Props.ToSHA512(user.password);
+                    string passSHA512 = Props.ToSHA512(user.Password);
 
-                    command.Parameters.AddWithValue("@username", user.login);
+                    command.Parameters.AddWithValue("@username", user.Username);
                     command.Parameters.AddWithValue("@password", passSHA512);
 
                     int userCount = (int)command.ExecuteScalar();
-                    return userCount > 0;
+                    if (userCount > 0)
+                    {
+                        return Ok("Вы авторизованы");
+                    }
+                    return BadRequest("Неверный логин или пароль");
                 }
             }
             catch (SqlException ex)
@@ -39,13 +44,13 @@ namespace FileStorageSystem.Controllers.Api
                 Logger.LogError($"User=---Login_User---",
                            $"Error. " +
                            $"id=---ID_User---", ex);
-                return false;
+                return StatusCode(500);
             }
             finally
             {
                 db.CloseConnection();
             }
-            return false;
+            return StatusCode(500);
         }
 
         // GET api/<UserController>/5
