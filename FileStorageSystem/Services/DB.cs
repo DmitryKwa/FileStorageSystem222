@@ -6,7 +6,7 @@ namespace FileStorageSystem.Services
     public class DB
     {
         private readonly string _connectionString;
-        private SqlConnection _connection;
+        public SqlConnection _connection;
 
         public DB(string connectionString)
         {
