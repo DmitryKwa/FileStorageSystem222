@@ -28,8 +28,8 @@ namespace FileStorageSystem.Controllers.Api
                     SqlCommand command = new SqlCommand(query, db._connection);
                     string passSHA512 = Props.ToSHA512(user.Password); // Шифр
 
-                    command.Parameters.AddWithValue("@username", user.login);
-                    command.Parameters.AddWithValue("@password", user.password);
+                    command.Parameters.AddWithValue("@username", user.Username);
+                    command.Parameters.AddWithValue("@password", passSHA512);
 
                     int userCount = (int)command.ExecuteScalar();
                     if (userCount > 0)
