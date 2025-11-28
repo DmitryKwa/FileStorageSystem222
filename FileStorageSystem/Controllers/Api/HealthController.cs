@@ -59,7 +59,7 @@ namespace FileStorageSystem.Controllers.Api
                 if (canConnect)
                 {
                     // Дополнительно: попробуем выполнить простой запрос
-                    bool hasData = await _context.Counterparties.AnyAsync();
+                    bool hasData = await _context.CAgents.AnyAsync();
                     return Ok(new { Message = "Подключение к БД успешно", HasData = hasData });
                 }
                 else

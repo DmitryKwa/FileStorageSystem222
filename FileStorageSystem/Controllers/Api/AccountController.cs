@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using FileStorageSystem.Model;
+using FileStorageSystem.Models;
 using FileStorageSystem.ViewModels;
 
 

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace FileStorageSystem.Model
+namespace FileStorageSystem.Models
 {
     [Table("Documents")]
     public class Document

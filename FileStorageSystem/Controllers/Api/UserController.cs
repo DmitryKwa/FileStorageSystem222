@@ -1,7 +1,7 @@
 ﻿using FileStorageSystem.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
-using FileStorageSystem.Model;
+using FileStorageSystem.Models;
 using Microsoft.EntityFrameworkCore;
 using FileStorageSystem.ViewModels;
 

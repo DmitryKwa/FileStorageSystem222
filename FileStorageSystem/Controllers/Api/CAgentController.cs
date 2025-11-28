@@ -4,19 +4,19 @@ namespace FileStorageSystem.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DocumentTypeController : ControllerBase
+    public class CAgentController : ControllerBase
     {
         private readonly DocumentStorageContext _context;
 
-        public DocumentTypeController(DocumentStorageContext context)
+        public CAgentController(DocumentStorageContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTypes()
+        public async Task<IActionResult> GetCAgents()
         {
-            return Ok(_context.DocumentTypes.Select(x => x.Name).ToList());
+            return Ok(_context.CAgents.Select(x => x).ToList());
         }
     }
 }

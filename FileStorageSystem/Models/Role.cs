@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FileStorageSystem.Model
+namespace FileStorageSystem.Models
 {
     [Table("Roles")]
     public class Role

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using FileStorageSystem.Model;
+using FileStorageSystem.Models;
 using FileStorageSystem.ViewModels;
 using FileStorageSystem.Services;
 

@@ -1,4 +1,4 @@
-﻿using FileStorageSystem.Model;
+﻿using FileStorageSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FileStorageSystem
@@ -12,7 +12,7 @@ namespace FileStorageSystem
         public DbSet<Role> Roles { get; set; }
         public DbSet<Detail> Extensions { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
-        public DbSet<CAgent> Counterparties { get; set; }
+        public DbSet<CAgent> CAgents { get; set; }
         public DbSet<Document> Documents { get; set; }
         public DbSet<User> Users { get; set; }
         /*

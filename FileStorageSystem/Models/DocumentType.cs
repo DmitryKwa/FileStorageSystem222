@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection.Metadata;
 
-namespace FileStorageSystem.Model
+namespace FileStorageSystem.Models
 {
     [Table("DocumentsType")]
     public class DocumentType
