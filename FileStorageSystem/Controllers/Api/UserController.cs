@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using FileStorageSystem.Model;
 using Microsoft.EntityFrameworkCore;
-using FileStorageSystem.Views;
+using FileStorageSystem.ViewModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,7 +22,7 @@ namespace FileStorageSystem.Controllers.Api
 
         // POST api/<UserController>
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] LoginForm form)
+        public async Task<IActionResult> Login([FromBody] LoginModel form)
         {
             string passSHA512 = Props.ToSHA512(form.Password);
 

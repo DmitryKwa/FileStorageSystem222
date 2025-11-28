@@ -28,24 +28,24 @@ namespace FileStorageSystem.Controllers.Api
          */
         // GET api/<HealthController>/5
         [HttpGet("ConnectionBD - Auth. User admin")]
-        public async Task<string> Get(int id)
+        public async Task<string> Getf(int id)
         {
-            Authorization authorization = new Authorization();
-            try
-            {
-                if (authorization.AuthorizationUser("admin", "admin"))
-                {
-                    return "Я красавчик";
-                }
-            }
-            catch (SqlException ex)
-            {
-                return ex.Message;
-            }
-            finally
-            {
+            //Authorization authorization = new Authorization();
+            //try
+            //{
+            //    if (authorization.AuthorizationUser("admin", "admin"))
+            //    {
+            //        return "Я красавчик";
+            //    }
+            //}
+            //catch (SqlException ex)
+            //{
+            //    return ex.Message;
+            //}
+            //finally
+            //{
 
-            }
+            //}
             return "иду я нахуй";
         }
 

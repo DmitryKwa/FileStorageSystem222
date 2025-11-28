@@ -1,6 +1,6 @@
-﻿namespace FileStorageSystem.Views
+﻿namespace FileStorageSystem.ViewModels
 {
-    public class LoginForm
+    public class LoginModel
     {
         public string? Email { get; set; }
         public string? Password { get; set; }
