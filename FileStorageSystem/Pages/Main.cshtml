@@ -130,31 +130,38 @@
                 </thead>
                 <tbody id="files-tbody">
                     <!-- Строки с данными будут добавляться/удаляться -->
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>Rosie Pearson</td>
-                        <td>979 Immanuel Ferry</td>
-                        <td>27.11.2025</td>
-                        <td>DOCS</td>
-                        <td>Договор, Чек</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>Rosie Pearson</td>
-                        <td>979 Immanuel Ferry</td>
-                        <td>27.11.2025</td>
-                        <td>DOCS</td>
-                        <td>Договор, Чек</td>
-                    </tr>
+                    
                 </tbody>
             </table>
 
             <!-- Кнопка должна быть видна админу -->
             <div id="no-records-container" class="no-records-container">
-                <button class="open-modal-btn">
+                <button id="OpenModalBtn" class="open-modal-btn">
                     <img src="/img/Plus.svg" alt="">Записей пока нет. Добавьте их!
                 </button>
             </div>
+
+
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                document.getElementById('OpenModalBtn').addEventListener('click', function() {
+                    event.preventDefault(); // предотвращаем отправку формы
+
+                    const modal = document.getElementById('MyModal');
+                    modal.style.display = "block"; // Делаем модальное окно видимым
+                });
+
+                // Закрытие модального окна при клике вне его области
+                window.addEventListener('click', function(event) {
+                    const modal = document.getElementById('MyModal');
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                });
+            </script>
+
+
 
             <!-- Пагинация -->
             <div class="pagination-row">
@@ -169,13 +176,12 @@
 
         </main>
     </div>
-    <div id="modal" class="modal">
+    <div id="MyModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
             <h2>Добавление файла</h2>
             <div class="form-group">
                 <label>Название</label>
-                <input type="text" placeholder="Введите название файла">
+                <input id="DocName" type="text" placeholder="Введите название файла">
             </div>
             <div class="form-group">
                 <label>Тип документа</label>
@@ -191,12 +197,49 @@
             </div>
             <div class="form-group">
                 <label>Формат файла</label>
-                <input type="text" placeholder="Выбирается автоматически" disabled>
+                <input id="DocType" type="text" placeholder="Выбирается автоматически" disabled>
             </div>
-            <button class="btn add-file">Добавить файл</button>
-            <button class="btn save">Сохранить</button>
+            <button id="AddNewFile" class="btn add-file">Добавить файл</button>
+            <button id="SaveThisFile" class="btn save">Сохранить</button>
+
+            <input type="file" id="fileInput" style="display: none;">
         </div>
     </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        document.getElementById('SaveThisFile').addEventListener('click', function(event) {
+            event.preventDefault(); // Предотвращаем стандартное поведение кнопки
+
+
+
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        document.getElementById('AddNewFile').addEventListener('click', function(event) {
+            event.preventDefault(); // Предотвращаем стандартное поведение кнопки
+            document.getElementById('fileInput').click(); // Кликаем на скрытый input file
+        });
+
+        document.getElementById('fileInput').addEventListener('change', function() {
+            // Здесь можно обработать выбранный файл, например, отправить на сервер
+            let file = this.files[0];
+
+            if (file) {
+                let fileName = file.name;
+                let fileExtension = '.' + fileName.split('.').pop(); // Получаем расширение файла, добавляем точку в начале
+                let fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf('.')); // Обрезаем расширение
+                document.getElementById('DocType').value = fileExtension;
+                document.getElementById('DocName').value = fileNameWithoutExtension;
+            } else {
+                document.getElementById('DocType').value = 'Ошибка загрузки'; // Очищаем поле, если файл не выбран
+            }
+            // Дальнейшая обработка файла (загрузка на сервер и т.д.)
+        });
+    </script>
 
 </body>
 </html>
