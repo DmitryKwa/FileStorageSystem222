@@ -11,19 +11,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Все файлы</title>
     <link rel="stylesheet" href="/css/main-style.css">
+    <link rel="stylesheet" href="/css/reset.css">
 </head>
 <body>
-    <!-- Верхняя панель -->
-    <header>
-        <div class="logo">F<span class="logo-span">SS</span></div>
-        <div class="search-container">
-            <input id="searchInput" type="text" placeholder="Поиск" class="search-input">
+    <header class="header">
+        <div class="logo-search-group">
+            <div class="logo">F<span>SS</span></div>
+            <input type="text" placeholder="Поиск" class="search-input">
         </div>
         <div class="user-profile">
             <img src="avatar.png" alt="Аватар пользователя" class="avatar">
-            <span id="loginSpan">Почта</span>
+            <div class="user-info-row">
+                <p id="loginSpan" class="user-info">Email</p>
+            </div>
         </div>
     </header>
+
 
     <script>
         const searchInput = document.getElementById('searchInput');
@@ -74,39 +77,27 @@
             delayedFetchData(query);
         });
     </script>
-
-
-
-
-
-
-
-
-
-
     <script>
         let login = localStorage.getItem('login');
         let span = document.getElementById('loginSpan');
         span.textContent = login;
     </script>
 
-    <!-- Структура с меню и основным контентом -->
+
     <div class="wrapper">
-        <!-- Боковое меню -->
         <aside class="sidebar">
-            <ul>
-                <li><a href="#"><img src="/img/Files.svg" alt=""></a></li>
+            <ul class="icon-list">
+                <li><a href="#" class="active"><img src="/img/Files.svg" alt=""></a></li>
                 <li><a href="#"><img src="/img/Folders.svg" alt=""></a></li>
             </ul>
         </aside>
 
-        <!-- Основной контент -->
         <main class="content">
-            <h1>Все файлы</h1>
+            <h1 class="title">Все файлы</h1>
 
             <div class="filters-box">
-                <!-- Фильтры -->
                 <div class="filters">
+                    <img src="/img/filter.svg" alt="" class="filter-icon">
                     <select name="sender" id="sender" class="filter-select">
                         <option value="">Отправитель</option>
                     </select>
@@ -119,15 +110,20 @@
                     <select name="type" id="type" class="filter-select">
                         <option value="">Тип</option>
                     </select>
+                    <button type="button" class="reset-btn">
+                        <img src="/img/Path.svg" alt="Сбросить">
+                    </button>
                 </div>
-                <button class="download-btn">Скачать</button>
+                <button type="button" class="download-btn">
+                    <img src="/img/Folder_Download.svg" alt="Скачать">
+                    Скачать
+                </button>
             </div>
 
-            <!-- Таблица с файлами -->
             <table class="files-table">
                 <thead>
                     <tr>
-                        <th></th>
+                        <th><input type="checkbox" class="select-all"></th>
                         <th>Название</th>
                         <th>Отправитель</th>
                         <th>Дата</th>
@@ -135,9 +131,10 @@
                         <th>Тип документа</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="files-tbody">
+                    <!-- Строки с данными будут добавляться/удаляться -->
                     <tr>
-                        <td><input type="checkbox" class="file-checkbox"></td>
+                        <td><input type="checkbox"></td>
                         <td>Rosie Pearson</td>
                         <td>979 Immanuel Ferry</td>
                         <td>27.11.2025</td>
@@ -145,24 +142,64 @@
                         <td>Договор, Чек</td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" class="file-checkbox"></td>
-                        <td>Darrell Caldwell</td>
-                        <td>8587 Frida Ports</td>
+                        <td><input type="checkbox"></td>
+                        <td>Rosie Pearson</td>
+                        <td>979 Immanuel Ferry</td>
                         <td>27.11.2025</td>
-                        <td>XLS</td>
-                        <td>Контракт, Квитанция</td>
+                        <td>DOCS</td>
+                        <td>Договор, Чек</td>
                     </tr>
                 </tbody>
             </table>
 
-            <!-- Пагинация -->
-            <span id="pageInfo">Страница 1/1. Результатов поиска: 2</span>
-            <div class="pagination">
-                <button class="prev-btn" aria-label="Предыдущая страница">←</button>
-                <div class="page-numbers"></div>
-                <button class="next-btn" aria-label="Следующая страница">→</button>
+            <!-- Кнопка должна быть видна админу -->
+            <div id="no-records-container" class="no-records-container">
+                <button class="open-modal-btn">
+                    <img src="/img/Plus.svg" alt="">Записей пока нет. Добавьте их!
+                </button>
             </div>
+
+            <!-- Пагинация -->
+            <div class="pagination-row">
+                <span id="pageInfo">Страница 1/1. Результатов поиска: 2</span>
+                <div class="pagination">
+                    <button class="prev-btn" aria-label="Предыдущая страница">←</button>
+                    <div class="page-numbers">dfdfdfd</div>
+                    <button class="next-btn" aria-label="Следующая страница">→</button>
+                </div>
+            </div>
+
+
         </main>
     </div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Добавление файла</h2>
+            <div class="form-group">
+                <label>Название</label>
+                <input type="text" placeholder="Введите название файла">
+            </div>
+            <div class="form-group">
+                <label>Тип документа</label>
+                <select>
+                    <option>Выберите тип</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Отправитель</label>
+                <select>
+                    <option>Выберите отправителя</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Формат файла</label>
+                <input type="text" placeholder="Выбирается автоматически" disabled>
+            </div>
+            <button class="btn add-file">Добавить файл</button>
+            <button class="btn save">Сохранить</button>
+        </div>
+    </div>
+
 </body>
 </html>
