@@ -54,10 +54,56 @@ namespace FileStorageSystem.Controllers.Api
         }
 
         // GET api/<UserController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{email}")]
+        public async Task<Users> GetUser(string email)
         {
-            return "value";
+            string connectionString = "Server=(localdb)\\mssqllocaldb;Database=FSS;Trusted_Connection=True;";
+            DB db = new(connectionString);
+
+            try
+            {
+                db.OpenConnection();
+                if (db.ConnectionStatus())
+                {
+                    string query = "SELECT * FROM Users WHERE Email = @email";
+                    SqlCommand command = new SqlCommand(query, db._connection);
+
+                    command.Parameters.AddWithValue("@email", email);
+
+                    SqlDataReader reader = await command.ExecuteReaderAsync();
+
+                    if (await reader.ReadAsync()) // Читаем данные асинхронно
+                    {
+                        // Создаем объект Users и заполняем его данными из reader
+                        Users user = new Users
+                        {
+                            Email = reader.GetString(reader.GetOrdinal("Email")),
+                            Name = reader.GetString(reader.GetOrdinal("Name")),
+                            SurName = reader.GetString(reader.GetOrdinal("SurName")),
+                            Patronymic = reader.GetString(reader.GetOrdinal("Patronymic")),
+                            Password = reader.GetString(reader.GetOrdinal("Password")),
+                            Role = reader.GetString(reader.GetOrdinal("Role")),
+                        };
+                        return user;
+                    }
+                    else
+                    {
+                        return null; // Пользователь с таким email не найден
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Logger.LogError($"User=---Login_User---",
+                           $"Error. " +
+                           $"id=---ID_User---", ex);
+                return null;
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+            return null;
         }
 
         // POST api/<UserController>

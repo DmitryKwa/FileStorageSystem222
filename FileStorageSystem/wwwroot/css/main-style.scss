@@ -1,96 +1,199 @@
-﻿$primary-color: #4880FF;
-$secondary-color: #0056b3;
-$background-color: #1B2431;
-$form-background: #273142;
-$input-background: #323D4E;
-$text-color: white;
-$input-text-color: #B6B6B6;
-$border-radius: 5px;
-$border-color: #CFCFCF1D;
-$input-padding: 15px;
-$margin-bottom: 15px;
-
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
-
-// Базовые стили
+﻿/* Общие стили */
 body {
-    font-family: "Nunito Sans", sans-serif;
-    background-color: $background-color;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-size: 14px;
     margin: 0;
+    padding: 0;
+    font-family: "Nunito Sans", sans-serif;
+    background-color: #1B2431;
+    color: #fff;
 }
 
-form {
-    background-color: $form-background;
+/* Верхняя панель */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #273142;
+    border-bottom: 1px solid #323D4E;
+}
+
+.logo {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4880FF;
+}
+
+.logo-span {
+    color: #fff;
+}
+
+.search-container {
+    flex: 1;
+    margin: 0 30px;
+}
+
+.search-input {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #323D4E;
+    font-size: 16px;
+    width: 435px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* Основной контент */
+main {
     padding: 30px;
-    border-radius: $border-radius;
 }
 
 h1 {
-    color: $text-color;
     margin-bottom: 30px;
+    color: #fff;
+    font-size: 24px;
 }
 
-label {
-    display: block;
-    color: $text-color;
-    font-weight: 800;
+/* Фильтры */
+.filters-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
 }
 
-input {
-    width: 360px;
-    padding: $input-padding;
-    border: 0.6px solid $border-color;
-    border-radius: $border-radius;
-    background-color: $input-background;
-    color: $input-text-color;
-    font-weight: 500;
-    // Стили для состояний фокуса и ховера
-    &:focus {
-        outline: none;
-        border-color: lighten($primary-color, 30%);
-    }
-}
-
-button {
-    margin-top: 30px;
-    width: 100%;
-    padding: $padding;
-    background-color: $primary-color;
-    border: none;
-    border-radius: $border-radius;
-    color: $text-color;
-    font-size: 16px;
-    cursor: pointer;
-
-    &:hover {
-        background-color: $secondary-color;
-    }
-}
-
-span[title] {
-    color: $text-color;
-    font-size: 16px;
-    margin-left: 5px;
-    cursor: help;
-}
-
-.login-header-row {
+.filters {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    margin-bottom: 30px;
+    background-color: #273142;
+    border: 1px solid #313D4F;
+    border-radius: 14px;
 }
 
-.input-row {
-    display: grid;
-    gap: 10px;
+.filter-select {
+    padding: 16px 25px;
+    margin-right: 10px;
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 5px;
+    background-color: inherit;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
 }
 
-.inputs-row {
-    display: grid;
-    gap: 24px;
+.download-btn {
+    font-weight: 800;
+    padding: 18px;
+    background-color: #4880FF;
+    border: none;
+    border-radius: 14px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+/* Таблица с файлами */
+.files-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+}
+
+.table-header {
+    border-radius: 20px 20px 0 0;
+}
+
+.files-table th,
+.files-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 0.4px solid #979797;
+}
+
+.files-table th {
+    background-color: #313D4F;
+    font-weight: bold;
+}
+
+.files-table td {
+    background-color: #273142;
+}
+
+.file-checkbox {
+    margin-right: 10px;
+}
+
+/* Пагинация */
+#pageInfo {
+    margin-bottom: 15px;
+    color: #888;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.prev-btn,
+.next-btn {
+    padding: 10px 15px;
+    background-color: #333;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.page-numbers {
+    margin: 0 10px;
+}
+
+.wrapper {
+    display: flex;
+}
+
+.sidebar {
+    background-color: #273142;
+    color: white;
+    padding: 15px;
+    height: 100vh; /* Высота экрана */
+    box-sizing: border-box;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.sidebar ul li a:hover {
+    background-color: #555;
+}
+
+.content {
+    width: 100%;
+    padding: 20px;
 }
