@@ -1,7 +1,6 @@
 ﻿@page
 @model FileStorageSystem.Pages.main_pageModel
 @{
-    ViewData["Title"] = "Home";
 }
 
 <!DOCTYPE html>
@@ -22,12 +21,10 @@
         <div class="user-profile">
             <img src="avatar.png" alt="Аватар пользователя" class="avatar">
             <div class="user-info-row">
-                <p class="user-info">FIO</p>
                 <p id="loginSpan" class="user-info">Email</p>
             </div>
         </div>
     </header>
-
 
     <script>
         const searchInput = document.getElementById('searchInput');
@@ -83,7 +80,6 @@
         let span = document.getElementById('loginSpan');
         span.textContent = login;
     </script>
-
 
     <div class="wrapper">
         <aside class="sidebar">
