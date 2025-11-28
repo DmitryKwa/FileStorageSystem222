@@ -31,26 +31,9 @@ namespace FileStorageSystem.Controllers.Api
                                        select user.Email).FirstOrDefaultAsync();
 
             if (userEmail == null)
-                return NotFound();
+                return BadRequest("Неверный логин или пароль");
 
             return Ok(userEmail);
-            try
-            {
-                    
-                /*int userCount = (int)command.ExecuteScalar();
-                if (userCount > 0)
-                {
-                    return Ok("Вы авторизованы");
-                }*/
-                return BadRequest("Неверный логин или пароль");
-            }
-            catch (SqlException ex)
-            {
-                Logger.LogError($"User=---Login_User---",
-                           $"Error. " +
-                           $"id=---ID_User---", ex);
-                return StatusCode(500);
-            }
         }
 
         // GET api/<UserController>/5

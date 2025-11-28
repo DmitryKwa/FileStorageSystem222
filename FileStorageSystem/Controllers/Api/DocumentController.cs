@@ -42,26 +42,23 @@ namespace FileStorageSystem.Controllers.Api
 
         // POST api/<DocumentController>
         [HttpPost]
-        public async Task<IActionResult> UploadDocuments(List<IFormFile> files)
+        public async Task<IActionResult> UploadDocuments([FromForm] IFormFile file, [FromForm] Document doc)
         {
-            if (files != null && files.Count > 0)
+            if (file != null)
             {
-                foreach (var file in files)
+                // Пример сохранения файла
+                if (file.Length > 0)
                 {
-                    // Пример сохранения файла
-                    if (file.Length > 0)
-                    {
-                        var fileName = file.FileName;
-                        var filePath = Path.Combine("Uploads", fileName);
+                    var fileName = file.FileName;
+                    var filePath = Path.Combine("Uploads", fileName);
 
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await file.CopyToAsync(stream);
-                        }
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
                     }
                 }
 
-                return Ok("Файлы успешно загружены.");
+                return Ok("Файл успешно загружен.");
             }
 
             return BadRequest("Не выбраны файлы");
