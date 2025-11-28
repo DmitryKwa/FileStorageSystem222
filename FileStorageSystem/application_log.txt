@@ -534,3 +534,4 @@
    at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
    at Microsoft.Data.SqlClient.SqlCommand.ExecuteScalar()
    at FileStorageSystem.Controllers.Api.UserController.Login(LoginForm user) in C:\Users\Дмитрий\Downloads\FileStorageSystem\FileStorageSystem\Controllers\Api\UserController.cs:line 34
+2025-11-28 15:12:24 [INFO] User: User=---Login_User---, Action: Hashing user string admin. id=---ID_User---

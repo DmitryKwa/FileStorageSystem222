@@ -18,7 +18,7 @@ namespace FileStorageSystem.Controllers.Api
 
         // POST api/<DocumentController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void UploadFile(IFormFile file)
         {
         }
 

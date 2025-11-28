@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;  // Добавлено для LINQ-запросов (если будете использовать в методах)
-using System.Threading.Tasks;  // Добавлено для асинхронных методов
+﻿using FileStorageSystem.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace FileStorageSystem.Model
+namespace FileStorageSystem
 {
     public class DocumentStorageContext : DbContext
     {
@@ -12,14 +9,12 @@ namespace FileStorageSystem.Model
         public DocumentStorageContext(DbContextOptions<DocumentStorageContext> options) : base(options) { }
 
         // DbSet для каждой сущности (таблицы в БД)
-        /*public DbSet<Document> Documents { get; set; }
-        public DbSet<Counterparty> Counterparties { get; set; }
-        public DbSet<DocumentType> DocumentTypes { get; set; }
-        public DbSet<Extension> Extensions { get; set; }
-        public DbSet<Keyword> Keywords { get; set; }
-        public DbSet<DocumentKeyword> DocumentKeywords { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<User> Users { get; set; }*/
+        public DbSet<Roles> Roles { get; set; }
+        public DbSet<Details> Extensions { get; set; }
+        public DbSet<DocumentsType> DocumentTypes { get; set; }
+        public DbSet<CAgents> Counterparties { get; set; }
+        public DbSet<Documents> Documents { get; set; }
+        public DbSet<Users> Users { get; set; }
         /*
         // Метод для настройки модели (связи, ключи и т.д.)
         protected override void OnModelCreating(ModelBuilder modelBuilder)
