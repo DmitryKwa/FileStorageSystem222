@@ -26,20 +26,19 @@ namespace FileStorageSystem.Controllers.Api
             string passSHA512 = Props.ToSHA512(form.Password);
 
             var query = from user in _context.Users
-                        where user.Email == form.Email && user.Password == form.Password
-                        select new
-                        { Email =  };
+            where user.Email == form.Email && user.Password == form.Password
+            select new
+            { Email =  6};
 
             try
             {
                     
-                    int userCount = (int)command.ExecuteScalar();
-                    if (userCount > 0)
-                    {
-                        return Ok("Вы авторизованы");
-                    }
-                    return BadRequest("Неверный логин или пароль");
-                }
+                /*int userCount = (int)command.ExecuteScalar();
+                if (userCount > 0)
+                {
+                    return Ok("Вы авторизованы");
+                }*/
+                return BadRequest("Неверный логин или пароль");
             }
             catch (SqlException ex)
             {
@@ -48,21 +47,13 @@ namespace FileStorageSystem.Controllers.Api
                            $"id=---ID_User---", ex);
                 return StatusCode(500);
             }
-            finally
-            {
-                db.CloseConnection();
-            }
-            return StatusCode(500);
         }
 
         // GET api/<UserController>/5
         [HttpGet("{email}")]
         public async Task<User> GetUser(string email)
         {
-            string connectionString = "Server=(localdb)\\mssqllocaldb;Database=FSS;Trusted_Connection=True;";
-            DB db = new(connectionString);
-
-            try
+            /*try
             {
                 db.OpenConnection();
                 if (db.ConnectionStatus())
@@ -104,7 +95,7 @@ namespace FileStorageSystem.Controllers.Api
             finally
             {
                 db.CloseConnection();
-            }
+            }*/
             return null;
         }
 
