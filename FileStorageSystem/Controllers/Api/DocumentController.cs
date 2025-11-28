@@ -2,8 +2,6 @@
 using FileStorageSystem.Model;
 using Microsoft.EntityFrameworkCore;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace FileStorageSystem.Controllers.Api
 {
     [Route("api/[controller]")]
@@ -54,7 +52,7 @@ namespace FileStorageSystem.Controllers.Api
                     if (file.Length > 0)
                     {
                         var fileName = file.FileName;
-                        var filePath = Path.Combine("uploads", fileName);
+                        var filePath = Path.Combine("Uploads", fileName);
 
                         using (var stream = new FileStream(filePath, FileMode.Create))
                         {

@@ -27,8 +27,8 @@ namespace FileStorageSystem.Controllers.Api
             string passSHA512 = Props.ToSHA512(form.Password);
 
             string? userEmail = await (from user in _context.Users
-                          where user.Email == form.Email && user.Password == form.Password
-                          select user.Email).FirstOrDefaultAsync();
+                                       where user.Email == form.Email && user.Password == passSHA512
+                                       select user.Email).FirstOrDefaultAsync();
 
             if (userEmail == null)
                 return NotFound();
