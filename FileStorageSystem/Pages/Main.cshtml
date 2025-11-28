@@ -21,9 +21,14 @@
         </div>
         <div class="user-profile">
             <img src="avatar.png" alt="Аватар пользователя" class="avatar">
-            <span>Почта</span>
+            <span id="loginSpan">Почта</span>
         </div>
     </header>
+    <script>
+        let login = localStorage.getItem('login');
+        let span = document.getElementById('loginSpan');
+        span.textContent = login;
+    </script>
 
     <!-- Структура с меню и основным контентом -->
     <div class="wrapper">
