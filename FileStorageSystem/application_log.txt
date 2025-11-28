@@ -534,3 +534,14 @@
    at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
    at Microsoft.Data.SqlClient.SqlCommand.ExecuteScalar()
    at FileStorageSystem.Controllers.Api.UserController.Login(LoginForm user) in C:\Users\Дмитрий\Downloads\FileStorageSystem\FileStorageSystem\Controllers\Api\UserController.cs:line 34
+2025-11-28 15:06:46 [INFO] User: User=---Login_User---, Action: Hashing user string admin. id=---ID_User---
+2025-11-28 15:06:50 [INFO] User: User=---Login_User---, Action: Hashing user string admin. id=---ID_User---
+2025-11-28 15:19:44 [INFO] User: User=---Login_User---, Action: Hashing user string admin. id=---ID_User---
+2025-11-28 15:22:35 [INFO] User: User=---Login_User---, Action: Hashing user string admin. id=---ID_User---
+2025-11-28 15:25:19 [INFO] User: User=---Login_User---, Action: Hashing user string admin. id=---ID_User---
+2025-11-28 15:26:37 [INFO] User: User=---Login_User---, Action: Hashing user string admin. id=---ID_User---
+2025-11-28 15:35:55 [INFO] User: User=---Login_User---, Action: Hashing user string admin. id=---ID_User---
+2025-11-28 15:36:03 [INFO] User: User=---Login_User---, Action: Hashing user string admin. id=---ID_User---
+2025-11-28 15:47:33 [INFO] User: User=---Login_User---, Action: Hashing user string admin. id=---ID_User---
+2025-11-28 15:47:37 [INFO] User: User=---Login_User---, Action: Hashing user string admin. id=---ID_User---
+2025-11-28 15:48:29 [INFO] User: User=---Login_User---, Action: Hashing user string admin. id=---ID_User---

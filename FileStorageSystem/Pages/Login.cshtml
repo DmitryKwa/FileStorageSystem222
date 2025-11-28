@@ -38,7 +38,7 @@
         <script>
             document.getElementById('loginButton').addEventListener('click', function() {
                 event.preventDefault(); // предотвращаем отправку формы
-
+                
                 // Получаем значения из полей ввода
                 const email = document.getElementById('login').value;
                 const pass = document.getElementById('password').value;
@@ -65,10 +65,10 @@
                     return data;
                 }
                 
-
                 login(email, pass)
                     .then(response => {
-                        alert(response);
+                        localStorage.setItem('login', email)
+                        window.location.href = '/Main';
                     })
                     .catch(error => {
                         alert(error);

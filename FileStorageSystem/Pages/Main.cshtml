@@ -22,10 +22,14 @@
         <div class="user-profile">
             <img src="avatar.png" alt="Аватар пользователя" class="avatar">
             <span>ФИО</span>
-            <span>Роль</span>
+            <span id="loginSpan"></span>
         </div>
     </header>
-
+    <script>
+        let login = localStorage.getItem('login');
+        let span = document.getElementById('loginSpan');
+        span.textContent = login;
+    </script>
     <!-- Основной контент -->
     <main>
         <h1>Все файлы</h1>
