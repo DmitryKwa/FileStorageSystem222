@@ -56,7 +56,7 @@ namespace FileStorageSystem.Controllers.Api
         }
 
         // POST api/<UserController>
-        [HttpPost]
+        [HttpPost("fff")]
         public void Post([FromBody] string value)
         {
         }
