@@ -1,8 +1,4 @@
 ﻿using Microsoft.Data.SqlClient;
-using System.Data;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using System.Data.Common;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace FileStorageSystem.Services
 {
