@@ -10,6 +10,7 @@ using System.Data;
 
 namespace FileStorageSystem.Controllers.Api
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class HealthController : ControllerBase
@@ -27,17 +28,13 @@ namespace FileStorageSystem.Controllers.Api
         [HttpGet("db2")]
         public async Task<string> Get(int id)
         {
-            string connectionString = "Server=(localdb)\\mssqllocaldb;Database=FSS;Trusted_Connection=True;";
-            DB db = new(connectionString);
+            Authorization authorization = new Authorization();
             try
             {
-                db.OpenConnection();
-
-                if (db.ConnectionStatus())
+                if (authorization.AuthorizationUser("admin", "admin"))
                 {
-                    return "Подключение открыто";
+                    return "Я красавчик";
                 }
-                return "Иду я нахуй";
             }
             catch (SqlException ex)
             {
@@ -45,8 +42,9 @@ namespace FileStorageSystem.Controllers.Api
             }
             finally
             {
-                db.CloseConnection();
+
             }
+            return "иду я нахуй";
         }
 
         // POST api/<HealthController>
