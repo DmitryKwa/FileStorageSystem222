@@ -10,9 +10,10 @@ namespace FileStorageSystem.Controllers.Api
     public class DocumentController : ControllerBase
     {
         // GET api/<DocumentController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet]
+        public string Get(string query)
         {
+            
             return "value";
         }
 
