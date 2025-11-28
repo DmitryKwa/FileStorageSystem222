@@ -16,7 +16,7 @@ namespace FileStorageSystem.Pages
 
 
             // Верните RedirectToPage или PartialView, если нужно обновить страницу
-            return new JsonResult(new { success = true, message = "Операция выполнена успешно!" });
+            return null;
         }
     }
 }

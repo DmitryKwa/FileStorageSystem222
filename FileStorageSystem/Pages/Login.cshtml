@@ -4,16 +4,6 @@
     ViewData["Title"] = "Login";
 }
 
-<!-- Форма для вызова метода -->
-<form id="myForm" method="post" asp-page-handler="MyMethod">
-    <!-- Скрытый input для безопасности (ASP.NET требует его для POST) -->
-    @Html.AntiForgeryToken()
-</form>
-
-
-
-
-
 !DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,26 +32,34 @@
         </div>
 
         <!-- Кнопка входа -->
-        <button id="myButton" "type=" submit" onclick="document.getElementById('myForm').submit();">Вход</button>
+        <button id="loginButton" type="submit">Вход</button>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-            $(document).ready(function () {
-                $("#myButton").on("click", function () {
-                    $.ajax({
-                        type: "POST",
-                        url: "/Login?handler=MyMethod", // Укажите корректный путь
-                        success: function (response) {
-                            if (response.success) {
-                                alert(response.message); // Показать всплывающее окно
-                            } else {
-                                alert("Произошла ошибка при выполнении операции.");
-                            }
-                        },
-                        error: function () {
-                            alert("Произошла ошибка при выполнении запроса.");
-                        }
-                    });
+            document.getElementById('loginButton').addEventListener('click', function() {
+                // Получаем значения из полей ввода
+                const login = document.getElementById('login').value;
+                const password = document.getElementById('password').value;
+
+                fetch('/api/user', {
+                    method: 'POST', // или 'GET', в зависимости от API
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        login: login, // добавьте необходимые параметры
+                        password: password
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // обработка результата
+                    console.log('Успех:', data);
+                    alert('Авторизация прошла успешно!', data);
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                    alert('Ошибка авторизации', error);
                 });
             });
         </script>
