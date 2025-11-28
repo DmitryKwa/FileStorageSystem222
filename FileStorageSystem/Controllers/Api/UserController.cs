@@ -24,7 +24,7 @@ namespace FileStorageSystem.Controllers.Api
                 db.OpenConnection();
                 if (db.ConnectionStatus())
                 {
-                    string query = "SELECT COUNT(*) FROM Users WHERE Email = @email AND PasswordHash = @password";
+                    string query = "SELECT COUNT(*) FROM Users WHERE Email = @email AND Password = @password";
                     SqlCommand command = new SqlCommand(query, db._connection);
                     string passSHA512 = Props.ToSHA512(user.Password); // Шифр
 
