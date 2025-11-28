@@ -1,0 +1,93 @@
+﻿@page
+@model FileStorageSystem.Pages.main_pageModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Все файлы</title>
+    <link rel="stylesheet" href="styles.scss">
+</head>
+<body>
+    <!-- Верхняя панель -->
+    <header>
+        <div class="logo">FSS</div>
+        <div class="search-container">
+            <input type="text" placeholder="Поиск" class="search-input">
+        </div>
+        <div class="user-profile">
+            <img src="avatar.png" alt="Аватар пользователя" class="avatar">
+            <span>ФИО</span>
+            <span>Роль</span>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main>
+        <h1>Все файлы</h1>
+
+        <!-- Фильтры -->
+        <div class="filters">
+            <select name="sender" id="sender" class="filter-select">
+                <option value="">Отправитель</option>
+            </select>
+            <select name="date" id="date" class="filter-select">
+                <option value="">Дата</option>
+            </select>
+            <select name="format" id="format" class="filter-select">
+                <option value="">Формат</option>
+            </select>
+            <select name="type" id="type" class="filter-select">
+                <option value="">Тип</option>
+            </select>
+            <button class="download-btn">Скачать</button>
+        </div>
+
+        <!-- Таблица с файлами -->
+        <table class="files-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Название</th>
+                    <th>Отправитель</th>
+                    <th>Дата</th>
+                    <th>Формат</th>
+                    <th>Тип документа</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" class="file-checkbox"></td>
+                    <td>Rosie Pearson</td>
+                    <td>979 Immanuel Ferry</td>
+                    <td>27.11.2025</td>
+                    <td>DOCS</td>
+                    <td>Договор, Чек</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="file-checkbox"></td>
+                    <td>Darrell Caldwell</td>
+                    <td>8587 Frida Ports</td>
+                    <td>27.11.2025</td>
+                    <td>XLS</td>
+                    <td>Контракт, Квитанция</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Пагинация -->
+        <span id="pageInfo">Страница 1/1. Результатов поиска: 2</span>
+        <div class="pagination">
+            <button class="prev-btn" aria-label="Предыдущая страница">←</button>
+            <div class="page-numbers">
+            </div>
+            <button class="next-btn" aria-label="Следующая страница">→</button>
+        </div>
+
+    </main>
+</body>
+</html>
