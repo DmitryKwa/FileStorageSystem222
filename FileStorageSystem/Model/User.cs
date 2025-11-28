@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace FileStorageSystem.Model
 {
     [Table("Users")]
-    public class Users
+    public class User
     {
         [Key]
         public string Email { get; set; }

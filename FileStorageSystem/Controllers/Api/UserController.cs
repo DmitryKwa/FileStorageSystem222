@@ -12,25 +12,27 @@ namespace FileStorageSystem.Controllers.Api
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly DocumentStorageContext _context;
+
+        public UserController(DocumentStorageContext context)
+        {
+            _context = context;
+        }
+
         // POST api/<UserController>
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] LoginForm user)
+        public async Task<IActionResult> Login([FromBody] LoginForm form)
         {
-            string connectionString = "Server=(localdb)\\mssqllocaldb;Database=FSS;Trusted_Connection=True;";
-            DB db = new(connectionString);
+            string passSHA512 = Props.ToSHA512(form.Password);
+
+            var query = from user in _context.Users
+                        where user.Email == form.Email && user.Password == form.Password
+                        select new
+                        { Email =  };
 
             try
             {
-                db.OpenConnection();
-                if (db.ConnectionStatus())
-                {
-                    string query = "SELECT COUNT(*) FROM Users WHERE Email = @email AND Password = @password";
-                    SqlCommand command = new SqlCommand(query, db._connection);
-                    string passSHA512 = Props.ToSHA512(user.Password); // Шифр
-
-                    command.Parameters.AddWithValue("@email", user.Email);
-                    command.Parameters.AddWithValue("@password", passSHA512);
-
+                    
                     int userCount = (int)command.ExecuteScalar();
                     if (userCount > 0)
                     {
@@ -55,7 +57,7 @@ namespace FileStorageSystem.Controllers.Api
 
         // GET api/<UserController>/5
         [HttpGet("{email}")]
-        public async Task<Users> GetUser(string email)
+        public async Task<User> GetUser(string email)
         {
             string connectionString = "Server=(localdb)\\mssqllocaldb;Database=FSS;Trusted_Connection=True;";
             DB db = new(connectionString);
@@ -75,7 +77,7 @@ namespace FileStorageSystem.Controllers.Api
                     if (await reader.ReadAsync()) // Читаем данные асинхронно
                     {
                         // Создаем объект Users и заполняем его данными из reader
-                        Users user = new Users
+                        User user = new User
                         {
                             Email = reader.GetString(reader.GetOrdinal("Email")),
                             Name = reader.GetString(reader.GetOrdinal("Name")),

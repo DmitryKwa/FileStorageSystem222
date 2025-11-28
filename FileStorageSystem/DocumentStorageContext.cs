@@ -9,12 +9,12 @@ namespace FileStorageSystem
         public DocumentStorageContext(DbContextOptions<DocumentStorageContext> options) : base(options) { }
 
         // DbSet для каждой сущности (таблицы в БД)
-        public DbSet<Roles> Roles { get; set; }
-        public DbSet<Details> Extensions { get; set; }
-        public DbSet<DocumentsType> DocumentTypes { get; set; }
-        public DbSet<CAgents> Counterparties { get; set; }
-        public DbSet<Documents> Documents { get; set; }
-        public DbSet<Users> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Detail> Extensions { get; set; }
+        public DbSet<DocumentType> DocumentTypes { get; set; }
+        public DbSet<CAgent> Counterparties { get; set; }
+        public DbSet<Document> Documents { get; set; }
+        public DbSet<User> Users { get; set; }
         /*
         // Метод для настройки модели (связи, ключи и т.д.)
         protected override void OnModelCreating(ModelBuilder modelBuilder)

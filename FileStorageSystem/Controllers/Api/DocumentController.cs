@@ -9,11 +9,23 @@ namespace FileStorageSystem.Controllers.Api
     [ApiController]
     public class DocumentController : ControllerBase
     {
-        // GET api/<DocumentController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        private readonly DocumentStorageContext _context;
+
+        public DocumentController(DocumentStorageContext context)
         {
-            return "value";
+            _context = context;
+        }
+
+        // GET api/<DocumentController>/5
+        [HttpGet]
+        public async Task<List<string>> Get(string query)
+        {
+            var result = from doc in _context.Documents
+                         where query == null || doc.Name.ToLower().Contains(query)
+                         select doc.Name;
+
+            var docsList = result.ToList();
+            return docsList;
         }
 
         // POST api/<DocumentController>

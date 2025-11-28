@@ -5,7 +5,7 @@ using System.Reflection.Metadata;
 namespace FileStorageSystem.Model
 {
     [Table("DocumentsType")]
-    public class DocumentsType
+    public class DocumentType
     {
         [Key]
         public string Name { get; set; }

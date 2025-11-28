@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace FileStorageSystem.Model
 {
     [Table("Documents")]
-    public class Documents
+    public class Document
     {
         [Key]
         public int Id { get; set; }

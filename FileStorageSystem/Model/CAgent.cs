@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace FileStorageSystem.Model
 {
     [Table("CAgents")]
-    public class CAgents
+    public class CAgent
     {
         [Key]
         public string INN { get; set; }
