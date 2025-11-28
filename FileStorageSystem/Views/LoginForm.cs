@@ -1,4 +1,4 @@
-﻿namespace FileStorageSystem.Model.ForApi
+﻿namespace FileStorageSystem.Views
 {
     public class LoginForm
     {

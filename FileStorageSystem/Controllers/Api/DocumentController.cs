@@ -32,11 +32,14 @@ namespace FileStorageSystem.Controllers.Api
         [HttpGet("{name}")]
         public async Task<IActionResult> GetDocument(string name)
         {
-            List<Document> documents = await (from doc in _context.Documents
-                                              where doc.Name == name
-                                              select doc).ToListAsync();
+            Document? document = await (from doc in _context.Documents
+                                        where doc.Name == name
+                                        select doc).FirstOrDefaultAsync();
 
-            return Ok(documents);
+            if (document == null)
+                return NotFound();
+
+            return Ok(document);
         }
 
         // POST api/<DocumentController>
@@ -63,16 +66,26 @@ namespace FileStorageSystem.Controllers.Api
             return Ok("Файл успешно загружен.");
         }
 
-        // PUT api/<DocumentController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //// PUT api/<DocumentController>/5
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
 
         // DELETE api/<DocumentController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{filePath}")]
+        public async Task<IActionResult> DeleteDocument(string filePath)
         {
+            Document document = _context.Documents.FirstOrDefault(doc => doc.FilePath == filePath);
+            
+            if (document != null)
+            {
+                _context.Documents.Remove(document);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+
+            return NotFound();
         }
     }
 }

@@ -21,6 +21,9 @@ namespace FileStorageSystem
                 options.LowercaseUrls = true;
                 options.LowercaseQueryStrings = true;
             });
+
+            services.AddHealthChecks();
+
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
             {
@@ -56,6 +59,7 @@ namespace FileStorageSystem
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHealthChecks("/health");
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });

@@ -5,11 +5,11 @@ namespace FileStorageSystem.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DocumentTypesController : ControllerBase
+    public class DocumentTypeController : ControllerBase
     {
         private readonly DocumentStorageContext _context;
 
-        public DocumentTypesController(DocumentStorageContext context)
+        public DocumentTypeController(DocumentStorageContext context)
         {
             _context = context;
         }
