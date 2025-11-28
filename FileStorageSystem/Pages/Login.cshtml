@@ -4,7 +4,7 @@
     ViewData["Title"] = "Login";
 }
 
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -40,35 +40,55 @@
                 event.preventDefault(); // предотвращаем отправку формы
 
                 // Получаем значения из полей ввода
-                const login = document.getElementById('login').value;
+                const username = document.getElementById('login').value;
                 const pass = document.getElementById('password').value;
 
-                fetch('/api/user', {
-                    method: 'POST', // или 'GET', в зависимости от API
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        username: login, // добавьте необходимые параметры
-                        password: pass
-                    })
-                })
-                .then(response => response.json())
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Ошибка сети');
+                async function login(username, password)
+                {
+                    const response = await fetch('/api/user', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            username: username,
+                            password: password
+                        })
+                    });
+
+                    if (!response.ok)
+                    {
+                        throw new Error(response.statusText);
                     }
-                    return response.json();
-                })
-                .then(data => {
-                    // обработка результата
-                    console.log('Успех:', data);
-                    alert('Авторизация прошла успешно!', data);
-                })
-                .catch(error => {
-                    console.error('Ошибка:', error);
-                    alert('Ошибка авторизации', error);
-                });
+
+                    const data = await response.status;
+                    return data;
+                }
+                
+                login(username, pass)
+                    .then(response => {
+                        alert(response);
+                    })
+                    .catch(error => {
+                        alert(error);
+                    });
+        
+            //     .then(response => response.json())
+            //     .then(response => {
+            //         if (!response.ok) {
+            //             throw new Error('Ошибка сети');
+            //         }
+            //         return response.json();
+            //     })
+            //     .then(data => {
+            //         обработка результата
+            //         console.log('Успех:', data);
+            //         alert('Авторизация прошла успешно!', data);
+            //     })
+            //     .catch(error => {
+            //         console.error('Ошибка:', error);
+            //         alert('Ошибка авторизации', error);
+            //     });
             });
         </script>
     </form>
