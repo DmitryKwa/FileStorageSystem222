@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 
 
@@ -29,6 +30,16 @@ namespace FileStorageSystem
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FSS", Description = "File Storage", Version = "v1" });
             });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/account/login";
+                    options.AccessDeniedPath = "/account/accessdenied";
+                    options.ExpireTimeSpan = TimeSpan.FromDays(7);
+                });
+
+            services.AddAuthorization();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -55,6 +66,8 @@ namespace FileStorageSystem
                 c.RoutePrefix = "docs"; // Опционально: для отображения Swagger по умолчанию на /docs/
             });
 
+            
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
