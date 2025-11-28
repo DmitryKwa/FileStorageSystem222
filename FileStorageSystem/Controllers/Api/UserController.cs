@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using FileStorageSystem.Model;
 using FileStorageSystem.Model.ForApi;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,11 +26,15 @@ namespace FileStorageSystem.Controllers.Api
         {
             string passSHA512 = Props.ToSHA512(form.Password);
 
-            var query = from user in _context.Users
-            where user.Email == form.Email && user.Password == form.Password
-            select new
-            { Email =  6};
+            var result = await (from user in _context.Users
+                          where user.Email == form.Email && user.Password == form.Password
+                          select user.Email).FirstOrDefaultAsync();
 
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return 
             try
             {
                     
@@ -55,8 +60,6 @@ namespace FileStorageSystem.Controllers.Api
         {
             /*try
             {
-                db.OpenConnection();
-                if (db.ConnectionStatus())
                 {
                     string query = "SELECT * FROM Users WHERE Email = @email";
                     SqlCommand command = new SqlCommand(query, db._connection);

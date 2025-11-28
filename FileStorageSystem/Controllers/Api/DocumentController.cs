@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FileStorageSystem.Model;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,20 +19,48 @@ namespace FileStorageSystem.Controllers.Api
 
         // GET api/<DocumentController>/5
         [HttpGet]
-        public async Task<List<string>> Get(string query)
+        public async Task<IActionResult> GetDocumentsNames(string query)
         {
             var result = from doc in _context.Documents
                          where query == null || doc.Name.ToLower().Contains(query)
                          select doc.Name;
 
             var docsList = result.ToList();
-            return docsList;
+            return Ok(docsList);
+        }
+
+        [HttpGet("{name}")]
+        public async Task<IActionResult> GetDocument(string name)
+        {
+            List<Document> documents = await (from doc in _context.Documents
+                                              where doc.Name == name
+                                              select doc).ToListAsync();
+
+            return Ok(documents);
         }
 
         // POST api/<DocumentController>
         [HttpPost]
-        public void UploadFile(IFormFile file)
+        public async Task<IActionResult> UploadFile(IFormFile file)
         {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("Файл не был загружен.");
+            }
+
+            // Получение имени файла
+            var fileName = file.FileName;
+
+            // Полный путь к папке, куда будет сохранен файл
+            var filePath = Path.Combine("путь_к_папке", fileName);
+
+            // Сохранение файла на сервере
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            return Ok("Файл успешно загружен.");
         }
 
         // PUT api/<DocumentController>/5
