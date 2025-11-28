@@ -37,9 +37,11 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             document.getElementById('loginButton').addEventListener('click', function() {
+                event.preventDefault(); // предотвращаем отправку формы
+
                 // Получаем значения из полей ввода
                 const login = document.getElementById('login').value;
-                const password = document.getElementById('password').value;
+                const pass = document.getElementById('password').value;
 
                 fetch('/api/user', {
                     method: 'POST', // или 'GET', в зависимости от API
@@ -47,11 +49,17 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        login: login, // добавьте необходимые параметры
-                        password: password
+                        username: login, // добавьте необходимые параметры
+                        password: pass
                     })
                 })
                 .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Ошибка сети');
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     // обработка результата
                     console.log('Успех:', data);
