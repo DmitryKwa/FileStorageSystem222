@@ -17,6 +17,11 @@ namespace FileStorageSystem
             //services.AddScoped<DocumentUploadService>();
             services.AddRazorPages();
             services.AddControllers();
+            services.Configure<RouteOptions>(options =>
+            {
+                options.LowercaseUrls = true;
+                options.LowercaseQueryStrings = true;
+            });
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
             {

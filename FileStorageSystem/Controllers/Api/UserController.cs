@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using FileStorageSystem.Model;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -7,39 +6,35 @@ namespace FileStorageSystem.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DocumentController : ControllerBase
+    public class UserController : ControllerBase
     {
-        // GET: api/<DocumentController>
+        // GET api/<UserController>
         [HttpGet]
-        public IEnumerable<Document> GetDocumentsList()
+        public IEnumerable<string> Get()
         {
-            Document doc = new();
-            doc.Id = 1;
-            doc.Title = "Test";
-            doc.DateAdded = DateTime.Now;
-            return [ doc ];
+            return new string[] { "value1", "value2" };
         }
 
-        // GET api/<DocumentController>/5
+        // GET api/<UserController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<DocumentController>
+        // POST api/<UserController>
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<DocumentController>/5
+        // PUT api/<UserController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<DocumentController>/5
+        // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
