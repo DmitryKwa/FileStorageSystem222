@@ -1,7 +1,9 @@
 ﻿using FileStorageSystem.Model;
 using FileStorageSystem.Pages;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -51,10 +53,29 @@ namespace FileStorageSystem.Controllers.Api
         }
 
         // GET api/<HealthController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("db2")]
+        public async Task<string> Get(int id)
         {
-            return "value";
+            SqlConnection connection = new SqlConnection("Server=(localdb)\\mssqllocaldb;Database=FSS;Trusted_Connection=True;");
+            try
+            {
+                // Открываем подключение
+                await connection.OpenAsync();
+                return "Подключение открыто";
+            }
+            catch (SqlException ex)
+            {
+                return ex.Message;
+            }
+            finally
+            {
+                // если подключение открыто
+                if (connection.State == ConnectionState.Open)
+                {
+                    // закрываем подключение
+                    await connection.CloseAsync();
+                }
+            }
         }
 
         // POST api/<HealthController>
