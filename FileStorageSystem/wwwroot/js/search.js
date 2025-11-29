@@ -12,7 +12,9 @@ function debounce(func, delay) {
 
 function fetchData(query) {
     // Отправляем запрос к API C#
-    fetch(`/api/document?query=${query}`) // Замените на ваш URL
+    fetch(`/api/document?query=${query}`, {
+        method: 'GET'
+    })
         .then(response => response.json())
         .then(data => {
             displayResults(data);
