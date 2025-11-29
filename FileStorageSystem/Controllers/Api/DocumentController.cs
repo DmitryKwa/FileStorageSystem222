@@ -20,11 +20,11 @@ namespace FileStorageSystem.Controllers.Api
 
         // GET api/<DocumentController>/5
         [HttpGet]
-        public async Task<IActionResult> GetDocumentsNames(string query)
+        public async Task<IActionResult> GetDocumentsNames(string? query)
         {
             var result = from doc in _context.Documents
                          where query == null || doc.Name.ToLower().Contains(query)
-                         select doc.Name;
+                         select doc;
 
             var docsList = result.ToList();
             return Ok(docsList);
