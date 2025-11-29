@@ -1,5 +1,5 @@
 ﻿@page
-@model FileStorageSystem.Pages.main_pageModel
+@model FileStorageSystem.Pages.FolderContentModel
 @{
 }
 
@@ -8,10 +8,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Все файлы</title>
+    <title>Содержимое папки</title>
     <link rel="stylesheet" href="/css/main-style.css">
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/menu-style.css">
+    <link rel="stylesheet" href="/css/folder-content-style.css">
 </head>
 <body>
     <header class="header">
@@ -29,25 +30,22 @@
     </header>
 
 
-    <script src="~/js/search.js"></script>
-
-    <script>
-        let login = localStorage.getItem('login');
-        let span = document.getElementById('loginSpan');
-        span.textContent = login;
-    </script>
-
     <div class="wrapper">
         <aside class="sidebar">
             <ul class="icon-list">
-                <li><a href="Main" class="active"><img src="/img/Files.svg" alt=""></a></li>
-                <li><a href="Folders"><img src="/img/Folders.svg" alt=""></a></li>
+                <li><a href="Main"><img src="/img/Files.svg" alt=""></a></li>
+                <li><a href="Folders" class="active"><img src="/img/Folders.svg" alt=""></a></li>
                 <li><a href="Login"><img src="/img/ArrowSquareLeft.svg" alt=""></a></li>
             </ul>
         </aside>
 
         <main class="content">
-            <h1 class="title">Все файлы</h1>
+            <div class="nav-items">
+                <h1 class="title">Папки</h1>
+                <div class="swap-left"><img src="/img/SwapLeft.svg" alt=""></div>
+                <h1 class="title">Новая папка</h1>
+            </div>
+
 
             <div class="filters-box">
                 <div class="filters">
@@ -132,9 +130,24 @@
             </button>
 
 
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script src="~/js/modalWindow.js"></script>
 
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                document.getElementById('OpenModalBtn').addEventListener('click', function() {
+                event.preventDefault(); // предотвращаем отправку формы
+
+                const modal = document.getElementById('modal');
+                modal.style.display = "block"; // Делаем модальное окно видимым
+                });
+
+                // Закрытие модального окна при клике вне его области
+                window.addEventListener('click', function(event) {
+                const modal = document.getElementById('modal');
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+                });
+            </script>
 
             <!-- Пагинация -->
             <div class="pagination-row">
@@ -192,11 +205,123 @@
     </div>
 
 
-    <script src="~/js/loadFile.js"></script>
 
-    <script src="~/js/uploadFile.js"></script>
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
 
-    <!-- Штука для списков при создании доков -->
-    <script src="~/js/docsAttributesSelect.js"></script>
+        function debounce(func, delay) {
+            let timeout;
+            return function(...args) {
+                const context = this;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), delay);
+            }
+        }
+
+        function fetchData(query) {
+            // Отправляем запрос к API C#
+            fetch(`/api/document?query=${query}`) // Замените на ваш URL
+                .then(response => response.json())
+                .then(data => {
+                    displayResults(data);
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                    searchResults.innerHTML = <p>Ошибка при выполнении запроса.</p>;
+                });
+        }
+
+        function displayResults(results) {
+            searchResults.innerHTML = ''; // Очищаем предыдущие результаты
+            if (results.length === 0) {
+                searchResults.innerHTML = <p>Ничего не найдено.</p>;
+                return;
+            }
+
+            const ul = document.createElement('ul');
+            results.forEach(result => {
+                const li = document.createElement('li');
+                li.textContent = result.title; // Предполагается, что у вас есть поле title
+                ul.appendChild(li);
+            });
+            searchResults.appendChild(ul);
+        }
+
+        const delayedFetchData = debounce(fetchData, 300); // Задержка 300мс
+
+        searchInput.addEventListener('input', function(event) {
+            const query = event.target.value;
+            delayedFetchData(query);
+        });
+    </script>
+    <script>
+        function updateTableVisibility() {
+            const table = document.querySelector('.files-table');
+            const tbody = document.getElementById('files-tbody');
+            const noFilesMessage = document.querySelector('.no-files-message');
+
+            // Проверяем, есть ли строки в tbody
+            const hasRows = tbody.querySelectorAll('tr').length > 0;
+
+
+            if (hasRows) {
+            // Если есть строки — показываем таблицу, скрываем сообщение
+            table.style.display = 'table';
+            noFilesMessage.style.display = 'none';
+            } else {
+            // Если нет строк — скрываем таблицу, показываем сообщение
+            table.style.display = 'none';
+            noFilesMessage.style.display = 'block';
+            }
+        }
+
+        // Вызываем функцию при загрузке страницы
+        document.addEventListener('DOMContentLoaded', updateTableVisibility);
+
+        // Если вы динамически добавляете/удаляете строки, вызывайте updateTableVisibility() после изменений
+        // Например:
+        //   addRowToTable(); // ваша функция добавления строки
+        //   updateTableVisibility(); // обновляем видимость
+    </script>
+
+    <script>
+        let login = localStorage.getItem('login');
+        let span = document.getElementById('loginSpan');
+        span.textContent = login;
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        document.getElementById('SaveThisFile').addEventListener('click', function(event) {
+            event.preventDefault(); // Предотвращаем стандартное поведение кнопки
+            document.getElementById('fileInput').click(); // Кликаем на скрытый input file
+
+
+
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        document.getElementById('AddNewFile').addEventListener('click', function(event) {
+            event.preventDefault(); // Предотвращаем стандартное поведение кнопки
+            document.getElementById('fileInput').click(); // Кликаем на скрытый input file
+        });
+
+        document.getElementById('fileInput').addEventListener('change', function() {
+            // Здесь можно обработать выбранный файл, например, отправить на сервер
+            let file = this.files[0];
+
+            if (file) {
+                let fileName = file.name;
+                let fileExtension = '.' + fileName.split('.').pop(); // Получаем расширение файла, добавляем точку в начале
+                let fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf('.')); // Обрезаем расширение
+                document.getElementById('DocType').value = fileExtension;
+                document.getElementById('DocName').value = fileNameWithoutExtension;
+            } else {
+                document.getElementById('DocType').value = 'Ошибка загрузки'; // Очищаем поле, если файл не выбран
+            }
+            // Дальнейшая обработка файла (загрузка на сервер и т.д.)
+        });
+    </script>
 </body>
 </html>
