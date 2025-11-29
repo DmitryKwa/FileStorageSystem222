@@ -6,7 +6,7 @@ const response = fetch('/api/document', {
 });
 
 if (!response.ok) {
-    throw new Error(await response.text);
+    throw new Error(response.text);
 }
 
 jsonData = response.json();
