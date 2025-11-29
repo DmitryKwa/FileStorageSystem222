@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using FileStorageSystem.Services;
 
 namespace FileStorageSystem.Controllers.Api
 {
@@ -6,7 +7,8 @@ namespace FileStorageSystem.Controllers.Api
     [ApiController]
     public class DirectoryController : ControllerBase
     {
-        public string root = @"C:\Users\Admin\source\repos\FileStorageSystem222\FileStorageSystem\Uploads";
+        public string root = new FileService().root;
+
         [HttpGet]
         public async Task<IActionResult> GetDirectories()
         {

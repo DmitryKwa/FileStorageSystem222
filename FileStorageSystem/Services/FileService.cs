@@ -5,7 +5,7 @@ namespace FileStorageSystem.Services
 {
     public class FileService
     {
-        public string root  { get { return @"C:\Users\Admin\source\repos\FileStorageSystem222\FileStorageSystem\Uploads"; } }
+        public string root { get { return $"{Directory.GetCurrentDirectory()}\\Uploads"; } }
 
         //public async void Create()
         //{
