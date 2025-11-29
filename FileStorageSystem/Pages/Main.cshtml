@@ -208,81 +208,10 @@
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        document.getElementById('SaveThisFile').addEventListener('click', function(event) {
-            event.preventDefault();
-
-            const docName = document.getElementById('DocName').value;
-            const docType = document.getElementById('DocType').value;
-            const docOwner = document.getElementById('DocOwner').value;
-            const fileInput = document.getElementById('fileInput'); // Получаем input type="file"
-            const file = fileInput.files[0]; // Получаем выбранный файл
-
-            async function uploadDocument(docName, docType, docOwner, docFormat, file) {
-                const formData = new FormData();
-
-                // Добавляем JSON-данные
-                const jsonData = {
-                    name: docName,
-                    docType: docType,
-                    INNCAgents: docOwner
-                }
-                formData.append('data', JSON.stringify(jsonData));
-                // Добавляем файл
-                formData.append('documentFile', file); // 'documentFile' - это имя поля на сервере
-
-                const response = await fetch('/api/document', {
-                    method: 'POST',
-                    body: formData, // Отправляем FormData
-                });
-
-                if (!response.ok) {
-                    throw new Error(response.statusText);
-                }
-
-                const data = await response.status;
-                return data;
-            }
-
-            // Вызываем функцию отправки
-            uploadDocument(docName, docType, docOwner, docFormat, file)
-                .then(result => {
-                    console.log('Успех:', result);
-                })
-                .catch(error => {
-                    console.error('Ошибка:', error);
-                });
-        });
-    </script>
+    <script src="~/js/site.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        document.getElementById('AddNewFile').addEventListener('click', function(event) {
-            event.preventDefault(); // Предотвращаем стандартное поведение кнопки
-            document.getElementById('fileInput').click(); // Кликаем на скрытый input file
-        });
-
-        document.getElementById('fileInput').addEventListener('change', function() {
-            // Здесь можно обработать выбранный файл, например, отправить на сервер
-            let file = this.files[0];
-
-            if (file) {
-                let fileName = file.name;
-                let fileExtension = '.' + fileName.split('.').pop(); // Получаем расширение файла, добавляем точку в начале
-                let fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf('.')); // Обрезаем расширение
-                document.getElementById('DocType').value = fileExtension;
-                document.getElementById('DocName').value = fileNameWithoutExtension;
-            } else {
-                document.getElementById('DocType').value = 'Ошибка загрузки'; // Очищаем поле, если файл не выбран
-            }
-            // Дальнейшая обработка файла (загрузка на сервер и т.д.)
-        });
-    </script>
-
-
-
-
-
+    <script src="~/js/loadFile.js"></script>
 
 
     <!-- Штука для списков при создании доков -->
