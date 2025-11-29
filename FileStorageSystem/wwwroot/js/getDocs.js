@@ -1,7 +1,7 @@
 ﻿const table = document.getElementById('files-table');
 const tbody = document.createElement('files-tbody');
 
-const response = await fetch('/api/document', {
+const response = fetch('/api/document', {
     method: 'GET'
 });
 
@@ -10,19 +10,6 @@ if (!response.ok) {
 }
 
 jsonData = response.json();
-
-jsonData.forEach(item => {
-    const row = document.createElement('tr');
-    for (let key in item) {
-        const cell = document.createElement('td');
-        cell.textContent = item[key];
-        row.appendChild(cell);
-    }
-    tbody.appendChild(row);
-});
-
-
-
 
 function addTableRow(name, address, date, type, description) {
     // 1. Получаем ссылку на tbody таблицы
@@ -62,11 +49,13 @@ function addTableRow(name, address, date, type, description) {
     tableBody.appendChild(newRow);
 }
 
+filePath = jsonData.filePath;
+const extension = filePath.substring(filePath.lastIndexOf('.'));
 // Пример использования функции:
 addTableRow(
-    'Rosie Pearson',
-    '979 Immanuel Ferry',
-    '27.11.2025',
-    'DOCS',
-    'Договор'
+    jsonData.name,
+    jsonData.inncAgents,
+    jsonData.addTime,
+    extension,
+    jsonData.docType
 );
