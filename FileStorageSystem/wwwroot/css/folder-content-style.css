@@ -1,0 +1,14 @@
+.nav-items {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.nav-items .title:first-child {
+    opacity: 32%;
+    margin-right: 35px;
+}
+.swap-left {
+    position: absolute;
+    top: 10px;
+    left: 110px;
+}

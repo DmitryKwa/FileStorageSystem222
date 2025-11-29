@@ -1,107 +1,108 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 
 
 /* Общие стили */
 body {
-    font-family: "Nunito Sans", sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    font-size: 14px;
-    background-color: #1B2431;
+  font-family: "Nunito Sans", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-size: 14px;
+  background-color: #1B2431;
 }
 
 /* Форма входа */
 .login-form {
-    width: 100%;
-    max-width: 400px;
-    padding: 30px;
-    background-color: #273142;
-    border: 1px solid #313D4F;
-    border-radius: 14px;
-    box-sizing: border-box;
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  background-color: #273142;
+  border: 1px solid #313D4F;
+  border-radius: 14px;
+  box-sizing: border-box;
 }
 
 /* Заголовок */
 .login-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
 }
 
 h1 {
-    color: #fff;
-    font-size: 32px;
-    font-weight: 800;
-    margin: 0;
+  color: #fff;
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0;
 }
 
 .hint {
-    color: #fff;
-    font-size: 1rem;
-    cursor: help;
-    display: flex;
-    align-items: center;
+  color: #fff;
+  font-size: 1rem;
+  cursor: help;
+  display: flex;
+  align-items: center;
 }
 
 /* Поля ввода */
 .input-group {
-    display: grid;
-    gap: 10px;
-    margin-bottom: 24px;
+  display: grid;
+  gap: 10px;
+  margin-bottom: 24px;
 }
 
 .label {
-    display: block;
-    color: #fff;
-    font-weight: 800;
+  display: block;
+  color: #fff;
+  font-weight: 800;
 }
 
 .input {
-    width: 100%;
-    padding: 18px;
-    border: 0.6px solid #CFCFCF1D;
-    border-radius: 14px;
-    background-color: #323D4E;
-    color: #B6B6B6;
-    font-weight: 500;
-    box-sizing: border-box;
-    transition: border-color 0.3s, outline 0.3s;
+  width: 100%;
+  padding: 18px;
+  border: 0.6px solid #CFCFCF1D;
+  border-radius: 14px;
+  background-color: #323D4E;
+  color: #B6B6B6;
+  font-weight: 500;
+  box-sizing: border-box;
+  transition: border-color 0.3s, outline 0.3s;
 }
 
-    .input:focus {
-        outline: none;
-        border-color: #4880FF;
-    }
+.input:focus {
+  outline: none;
+  border-color: #4880FF;
+}
 
-    .input:focus-visible {
-        outline: 2px solid #4880FF;
-        outline-offset: 2px;
-    }
+.input:focus-visible {
+  outline: 2px solid #4880FF;
+  outline-offset: 2px;
+}
 
 /* Кнопка */
 .btn {
-    width: 100%;
-    padding: 18px;
-    margin-top: 6px;
-    border: none;
-    border-radius: 14px;
-    font-family: "Nunito Sans", sans-serif;
-    font-size: 1rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: background-color 0.5s;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 18px;
+  margin-top: 6px;
+  border: none;
+  border-radius: 14px;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background-color 0.5s;
+  box-sizing: border-box;
 }
 
 .btn-primary {
-    background-color: #4880FF;
-    color: #fff;
+  background-color: #4880FF;
+  color: #fff;
 }
 
-    .btn-primary:hover {
-        background-color: #0056b3;
-    }
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+

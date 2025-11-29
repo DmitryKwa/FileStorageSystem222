@@ -1,0 +1,53 @@
+/* Стили для основного контента */
+
+
+.folders-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 колонки с равным размером */
+  gap: 20px; /* отступы между карточками */
+  width: 100%; /* занимаем всю доступную ширину */
+  margin: 0 auto; /* центрируем контейнер */
+  justify-content: center; /* выравнивание по центру, если карточек меньше 4 */
+}
+
+.folder-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: #273142;
+  padding: 30px;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.3s;
+  width: 100%; /* каждая карточка занимает всю ширину своей колонки */
+  box-sizing: border-box; /* учитываем padding в размерах элемента */
+}
+
+.folder-text {
+  display: grid;
+  gap: 10px;
+  text-align: start;
+}
+
+.folder-card:hover {
+  transform: translateY(-3px);
+}
+
+.folder-text h3 {
+  font-weight: 600;
+}
+
+.folder-card p {
+  color: #fff;
+  opacity: 0.7;
+}
+.open-modal-btn {
+  right: 30px;
+  bottom: 30px;
+}
+.form-grid {
+  display: grid;
+}
+.modal-content {
+  width: 28%;
+}
