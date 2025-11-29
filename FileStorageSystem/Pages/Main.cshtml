@@ -54,8 +54,6 @@
                     <img src="/img/filter.svg" alt="" class="filter-icon">
                     <select name="sender" id="sender" class="filter-select">
                         <option value="" disabled selected>Отправитель</option>
-                        <option>979 Immanuel Ferry</option>
-                        <option>8587 Frida Ports</option>
                     </select>
                     <select name="date" id="date" class="filter-select">
                         <option value="" disabled selected>Дата</option>
@@ -107,22 +105,9 @@
                 </thead>
                 <tbody id="files-tbody">
                     <!-- Строки с данными будут добавляться/удаляться -->
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>Rosie Pearson</td>
-                        <td>979 Immanuel Ferry</td>
-                        <td>27.11.2025</td>
-                        <td>DOCS</td>
-                        <td>Договор</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>Darrell Caldwell</td>
-                        <td>8587 Frida Ports</td>
-                        <td>27.11.2025</td>
-                        <td>XLS</td>
-                        <td>Отчёт</td>
-                    </tr>
+                    
+                    
+
                 </tbody>
             </table>
 
@@ -155,7 +140,7 @@
                 <div class="grid-column">
                     <div class="input-group">
                         <label class="label">Название</label>
-                        <input type="text" placeholder="Введите название файла" class="input">
+                        <input id="DocName" type="text" placeholder="Введите название файла" class="input">
                     </div>
                     <div class="input-group">
                         <label class="label">Отправитель</label>
@@ -164,7 +149,7 @@
                         </select>
                     </div>
 
-                    <button class="btn add-file"><img src="/img/UploadSimple.svg" alt=""> Добавить файл</button>
+                    <button id="AddNewFile" class="btn add-file"><img src="/img/UploadSimple.svg" alt=""> Добавить файл</button>
                 </div>
 
                 <div class="grid-column">
@@ -176,9 +161,11 @@
                     </div>
                     <div class="input-group">
                         <label class="label">Формат файла</label>
-                        <input type="text" placeholder="Выбирается автоматически" disabled class="input">
+                        <input id="DocFormat" type="text" placeholder="Выбирается автоматически" disabled class="input">
                     </div>
-                    <button class="btn save">Сохранить</button>
+                    <button id="SaveThisFile" class="btn save">Сохранить</button>
+
+                    <input type="file" id="fileInput" style="display: none;">
                 </div>
             </div>
         </div>
