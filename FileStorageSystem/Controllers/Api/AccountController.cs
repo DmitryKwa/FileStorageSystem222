@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using FileStorageSystem.Models;
+﻿using FileStorageSystem.Models;
 using FileStorageSystem.ViewModels;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 
 namespace FileStorageSystem.Controllers.Api
@@ -13,78 +13,59 @@ namespace FileStorageSystem.Controllers.Api
     [ApiController]
     public class AccountController : ControllerBase
     {
-        //private readonly DocumentStorageContext _context;
-        //public AccountController(DocumentStorageContext context)
-        //{
-        //    _context = context;
-        //}
-        //[HttpGet]
-        //public IActionResult Login()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
+        private readonly DocumentStorageContext _context;
+        public AccountController(DocumentStorageContext context)
+        {
+            _context = context;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUsername()
+        {
+            return Ok(User.Identity.Name);
+        }
+
+        [HttpPost("login")]
         //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Login(LoginModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
-        //        if (user != null)
-        //        {
-        //            await Authenticate(model.Email); // аутентификация
+        public async Task<IActionResult> Login(LoginModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string passSHA512 = Props.ToSHA512(model.Password);
 
-        //            return RedirectToAction("Index", "Home");
-        //        }
-        //        ModelState.AddModelError("", "Некорректные логин и(или) пароль");
-        //    }
-        //    return View(model);
-        //}
-        //[HttpGet]
-        //public IActionResult Register()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Register(RegisterModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
-        //        if (user == null)
-        //        {
-        //            // добавляем пользователя в бд
-        //            db.Users.Add(new User { Email = model.Email, Password = model.Password });
-        //            await db.SaveChangesAsync();
+                User user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == passSHA512);
 
-        //            await Authenticate(model.Email); // аутентификация
+                if (user != null)
+                {
+                    await Authorizate(model.Email, user.Role); // аутентификация
 
-        //            return RedirectToAction("Index", "Home");
-        //        }
-        //        else
-        //            ModelState.AddModelError("", "Некорректные логин и(или) пароль");
-        //    }
-        //    return View(model);
-        //}
+                    return RedirectToPage("/Main");
+                }
+                return BadRequest("Неверный логин или пароль");
+                //ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+            }
+            return BadRequest("Bad");
+        }
 
-        //private async Task Authenticate(string userName)
-        //{
-        //    // создаем один claim
-        //    var claims = new List<Claim>
-        //    {
-        //        new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
-        //    };
-        //    // создаем объект ClaimsIdentity
-        //    ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-        //    // установка аутентификационных куки
-        //    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
-        //}
+        private async Task Authorizate(string email, string role)
+        {
+            // создаем один claim
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, email),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, role)
+            };
+            // создаем объект ClaimsIdentity
+            ClaimsIdentity id = new ClaimsIdentity(claims, "Cookies");
+            // установка аутентификационных куки
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+        }
 
-        //public async Task<IActionResult> Logout()
-        //{
-        //    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        //    return RedirectToAction("Login", "Account");
-        //}
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login");
+        }
     }
 }

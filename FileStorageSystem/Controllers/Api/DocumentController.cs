@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using FileStorageSystem.Models;
-using FileStorageSystem.ViewModels;
+﻿using FileStorageSystem.Models;
 using FileStorageSystem.Services;
+using FileStorageSystem.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FileStorageSystem.Controllers.Api
 {
@@ -44,7 +45,7 @@ namespace FileStorageSystem.Controllers.Api
 
         // POST api/<DocumentController>
         [HttpPost]
-        public async Task<IActionResult> UploadDocuments(IFormFile file, [FromForm] DocFromClientModel docData)
+        public async Task<IActionResult> UploadDocument([FromForm] DocFromClientModel docData, IFormFile file)
         {
             if (file != null)
             {
@@ -65,6 +66,7 @@ namespace FileStorageSystem.Controllers.Api
 
                 Document document = new Document { Name = docData.Name, DocType = docData.DocType, Size = file.Length, AddTime = DateTime.Now, INNCAgents = docData.INNCAgents, FilePath = filePath };
                 await _context.Documents.AddAsync(document);
+                await _context.SaveChangesAsync();
                 return Ok("Файл успешно загружен.");
             }
 
@@ -77,7 +79,7 @@ namespace FileStorageSystem.Controllers.Api
         //{
         //}
 
-        // DELETE api/<DocumentController>/5
+        [Authorize]
         [HttpDelete("{filePath}")]
         public async Task<IActionResult> DeleteDocument(string filePath)
         {

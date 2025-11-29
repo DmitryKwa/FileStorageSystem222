@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using FileStorageSystem.Models;
 
 namespace FileStorageSystem.Controllers.Api
 {
@@ -17,6 +19,14 @@ namespace FileStorageSystem.Controllers.Api
         public async Task<IActionResult> GetTypes()
         {
             return Ok(_context.DocumentTypes.Select(x => x.Name).ToList());
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> CreateDocType([FromBody] string docType)
+        {
+            _context.DocumentTypes.Add(new DocumentType { Name = docType });
+            return Ok($"Создан тип {docType}");
         }
     }
 }

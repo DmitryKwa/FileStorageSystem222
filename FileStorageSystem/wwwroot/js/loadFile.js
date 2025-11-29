@@ -11,10 +11,8 @@ document.getElementById('fileInput').addEventListener('change', function () {
         let fileName = file.name;
         let fileExtension = '.' + fileName.split('.').pop(); // Получаем расширение файла, добавляем точку в начале
         let fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf('.')); // Обрезаем расширение
-        document.getElementById('DocType').value = fileExtension;
+        document.getElementById('DocFormat').value = fileExtension;
         document.getElementById('DocName').value = fileNameWithoutExtension;
-    } else {
-        document.getElementById('DocType').value = 'Ошибка загрузки'; // Очищаем поле, если файл не выбран
     }
     // Дальнейшая обработка файла (загрузка на сервер и т.д.)
 });

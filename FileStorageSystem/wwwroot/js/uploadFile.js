@@ -1,7 +1,7 @@
 ﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
-document.getElementById('SaveThisFile').addEventListener('click', function (event) {
+document.getElementById('SaveThisFile').addEventListener('click', async function (event) {
     event.preventDefault();
 
     const docName = document.getElementById('DocName').value;
@@ -10,17 +10,21 @@ document.getElementById('SaveThisFile').addEventListener('click', function (even
     const fileInput = document.getElementById('fileInput'); // Получаем input type="file"
     const file = fileInput.files[0]; // Получаем выбранный файл
 
-    async function uploadDocument(docName, docType, docOwner, docFormat, file) {
+    async function uploadDocument(docName, docType, docOwner, file) {
         const formData = new FormData();
 
         // Добавляем JSON-данные
+        //const jsonData = {
+        //    name: docName,
+        //    docType: docType,
+        //    INNCAgents: docOwner
+        //}
+        //formData.append("jsonData", jsonData)
+
         formData.append('name', docName);
         formData.append('docType', docType);
         formData.append('INNCAgents', docOwner);
-        formData.append('filePath', filePath);
-
-        // Добавляем файл
-        formData.append('documentFile', file); // 'documentFile' - это имя поля на сервере
+        formData.append('file', file); // 'documentFile' - это имя поля на сервере
 
         const response = await fetch('/api/document', {
             method: 'POST',
@@ -28,15 +32,12 @@ document.getElementById('SaveThisFile').addEventListener('click', function (even
         });
 
         if (!response.ok) {
-            throw new Error(response.statusText);
+            throw new Error(await response.text);
         }
-
-        const data = await response.status;
-        return data;
     }
 
     // Вызываем функцию отправки
-    uploadDocument(docName, docType, docOwner, docFormat, file)
+    uploadDocument(docName, docType, docOwner, file)
         .then(result => {
             console.log('Успех:', result);
         })

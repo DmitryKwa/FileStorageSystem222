@@ -26,55 +26,8 @@
         </div>
     </header>
 
-    <script>
-        const searchInput = document.getElementById('searchInput');
-        const searchResults = document.getElementById('searchResults');
+    <script src="~/js/search.js"></script>
 
-        function debounce(func, delay) {
-            let timeout;
-            return function(...args) {
-                const context = this;
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(context, args), delay);
-            }
-        }
-
-        function fetchData(query) {
-            // Отправляем запрос к API C#
-            fetch(`/api/document?query=${query}`) // Замените на ваш URL
-                .then(response => response.json())
-                .then(data => {
-                    displayResults(data);
-                })
-                .catch(error => {
-                    console.error('Ошибка:', error);
-                    searchResults.innerHTML = `<p>Ошибка при выполнении запроса.</p>`;
-                });
-        }
-
-        function displayResults(results) {
-            searchResults.innerHTML = ''; // Очищаем предыдущие результаты
-            if (results.length === 0) {
-                searchResults.innerHTML = `<p>Ничего не найдено.</p>`;
-                return;
-            }
-
-            const ul = document.createElement('ul');
-            results.forEach(result => {
-                const li = document.createElement('li');
-                li.textContent = result.title; // Предполагается, что у вас есть поле title
-                ul.appendChild(li);
-            });
-            searchResults.appendChild(ul);
-        }
-
-        const delayedFetchData = debounce(fetchData, 300); // Задержка 300мс
-
-        searchInput.addEventListener('input', function(event) {
-            const query = event.target.value;
-            delayedFetchData(query);
-        });
-    </script>
     <script>
         let login = localStorage.getItem('login');
         let span = document.getElementById('loginSpan');
@@ -185,7 +138,7 @@
             </div>
             <div class="form-group">
                 <label>Тип документа</label>
-                <select id="DocFormat">
+                <select id="DocType">
                     <option>Выберите тип</option>
                 </select>
             </div>
@@ -197,7 +150,7 @@
             </div>
             <div class="form-group">
                 <label>Формат файла</label>
-                <input id="DocType" type="text" placeholder="Выбирается автоматически" disabled>
+                <input id="DocFormat" type="text" placeholder="Выбирается автоматически" disabled>
             </div>
             <button id="AddNewFile" class="btn add-file">Добавить файл</button>
             <button id="SaveThisFile" class="btn save">Сохранить</button>
@@ -208,11 +161,10 @@
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="~/js/site.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/js/loadFile.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/uploadFile.js"></script>
 
     <!-- Штука для списков при создании доков -->
     <script>
@@ -253,7 +205,7 @@
                 data.forEach(item => {
                   // Предполагаем, что в JSON есть поля, которые мы хотим использовать в качестве value и текста option.
                   // Замени 'id' и 'name' на соответствующие поля в твоем JSON.  Важно!
-                  const optionText = item.name;  // Или item.какое_то_другое_поле
+                  const optionText = item.inn;  // Или item.какое_то_другое_поле
 
                   // Создаем элемент option
                   const option = document.createElement('option');
@@ -277,10 +229,10 @@
         document.addEventListener('DOMContentLoaded', function() {
 
           function fillDocumentTypeDropdown() {
-            const selectElement = document.getElementById('DocFormat');
+            const selectElement = document.getElementById('DocType');
 
             if (!selectElement) {
-              console.error('Элемент select с id "DocFormat" не найден.');
+              console.error('Элемент select с id "DocType" не найден.');
               return;
             }
 

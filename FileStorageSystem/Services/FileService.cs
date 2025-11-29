@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-
-namespace FileStorageSystem.Services
+﻿namespace FileStorageSystem.Services
 {
     public class FileService
     {

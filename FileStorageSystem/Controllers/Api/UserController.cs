@@ -1,9 +1,6 @@
-﻿using FileStorageSystem.Services;
+﻿using FileStorageSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using FileStorageSystem.Models;
-using Microsoft.EntityFrameworkCore;
-using FileStorageSystem.ViewModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,6 +8,7 @@ namespace FileStorageSystem.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Админ")]
     public class UserController : ControllerBase
     {
         private readonly DocumentStorageContext _context;
@@ -20,23 +18,6 @@ namespace FileStorageSystem.Controllers.Api
             _context = context;
         }
 
-        // POST api/<UserController>
-        [HttpPost]
-        public async Task<IActionResult> Login([FromBody] LoginModel form)
-        {
-            string passSHA512 = Props.ToSHA512(form.Password);
-
-            string? userEmail = await (from user in _context.Users
-                                       where user.Email == form.Email && user.Password == passSHA512
-                                       select user.Email).FirstOrDefaultAsync();
-
-            if (userEmail == null)
-                return BadRequest("Неверный логин или пароль");
-
-            return Ok(userEmail);
-        }
-
-        // GET api/<UserController>/5
         [HttpGet("{email}")]
         public async Task<User> GetUser(string email)
         {
@@ -84,19 +65,16 @@ namespace FileStorageSystem.Controllers.Api
             return null;
         }
 
-        // POST api/<UserController>
         [HttpPost("fff")]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<UserController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

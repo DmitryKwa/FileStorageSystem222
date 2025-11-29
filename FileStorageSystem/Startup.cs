@@ -38,7 +38,6 @@ namespace FileStorageSystem
                     options.AccessDeniedPath = "/account/accessdenied";
                     options.ExpireTimeSpan = TimeSpan.FromDays(7);
                 });
-
             services.AddAuthorization();
         }
 
